@@ -1,1 +1,43 @@
-<p>home works!</p>
+<div class="next-match" *ngIf="nextMatch">
+    <h2>Następny Mecz</h2>
+    <p>{{ nextMatch.matchDate | date:'fullDate' }}</p>
+    <p>Stan: {{ nextMatch.state }}</p>
+    <p>Skarbnik: {{ nextMatch.skarbnikId }}</p>
+  </div>
+  
+  <div class="matches-history">
+    <h2>Historia Meczów</h2>
+    <div *ngFor="let match of matchesHistory" class="match-item">
+      <div class="match-header">
+        <h3>{{ match.matchDate | date:'EEEE, dd-MM-yyyy HH:mm' }}</h3>
+        <a [href]="match.eventLink" target="_blank">Link do wydarzenia</a>
+      </div>
+      <div class="teams">
+        <div class="team">
+          <h4>{{ match.teamA.teamName }}</h4>
+          <p class="team-rating">Rating zespołu: {{ match.teamA.teamRating }}</p> <!-- Dodany rating zespołu -->
+          <ul>
+            <li *ngFor="let player of match.teamA.players; let i = index">
+              {{ i + 1 }}. {{ player.id }} - {{ player.newRating }} ({{ player.difference > 0 ? '+' : '' }}{{ player.difference }})
+            </li>
+          </ul>
+        </div>
+        <div class="result">
+          <p>{{ match.teamA.goals }} : {{ match.teamB.goals }}</p>
+        </div>
+        <div class="team">
+          <h4>{{ match.teamB.teamName }}</h4>
+          <p class="team-rating">Rating zespołu: {{ match.teamB.teamRating }}</p> <!-- Dodany rating zespołu -->
+          <ul>
+            <li *ngFor="let player of match.teamB.players; let i = index">
+              {{ i + 1 }}. {{ player.id }} - {{ player.newRating }} ({{ player.difference > 0 ? '+' : '' }}{{ player.difference }})
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="skarbnik">
+        <p>Skarbnik: {{ match.skarbnik }}</p>
+      </div>
+    </div>
+  </div>
+  

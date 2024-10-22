@@ -1,0 +1,29 @@
+.next-match, .matches-history {
+    margin: 20px;
+  }
+  
+  .match-header {
+    text-align: center;
+  }
+  
+  .teams {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .team {
+    width: 45%;
+  }
+  
+  .result {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5em;
+  }
+
+  .team-rating {
+    font-style: italic;
+    margin-bottom: 10px;
+  }
+  
