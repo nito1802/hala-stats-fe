@@ -2,6 +2,10 @@
     margin: 20px;
   }
   
+  .match-item {
+    margin-bottom: 40px; /* Dodana przestrzeń między meczami */
+  }
+  
   .match-header {
     text-align: center;
   }
@@ -9,21 +13,47 @@
   .teams {
     display: flex;
     justify-content: space-between;
+    align-items: flex-start; /* Wyrównanie kolumn do góry */
   }
   
   .team {
-    width: 45%;
+    width: 45%; /* Dostosowanie szerokości kolumn zespołów */
+    text-align: center; /* Wyśrodkowanie zawartości */
   }
   
-  .result {
+  .result-column {
+    width: 10%; /* Szerokość kolumny ze wynikiem */
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 1.5em;
   }
-
+  
+  .result {
+    font-size: 1.5em;
+    font-weight: bold;
+  }
+  
   .team-rating {
     font-style: italic;
     margin-bottom: 10px;
+  }
+  
+  .players-table {
+    width: 100%;
+    margin: 0 auto;
+    border-collapse: collapse;
+  }
+  
+  .players-table th, .players-table td {
+    padding: 8px;
+    border: 1px solid #ddd;
+  }
+  
+  .players-table th {
+    background-color: #f2f2f2;
+  }
+  
+  .bold {
+    font-weight: bold;
   }
   

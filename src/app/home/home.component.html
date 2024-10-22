@@ -9,34 +9,54 @@
     <h2>Historia Meczów</h2>
     <div *ngFor="let match of matchesHistory" class="match-item">
       <div class="match-header">
-        <h3>{{ match.matchDate | date:'EEEE, dd-MM-yyyy HH:mm' }}</h3>
+        <h3>{{ match.matchDate | date:'EEEE, dd-MM-yyyy HH:mm' | titlecase }}</h3>
         <a [href]="match.eventLink" target="_blank">Link do wydarzenia</a>
+        <p>Skarbnik: {{ match.skarbnik }}</p>
       </div>
       <div class="teams">
         <div class="team">
-          <h4>{{ match.teamA.teamName }}</h4>
-          <p class="team-rating">Rating zespołu: {{ match.teamA.teamRating }}</p> <!-- Dodany rating zespołu -->
-          <ul>
-            <li *ngFor="let player of match.teamA.players; let i = index">
-              {{ i + 1 }}. {{ player.id }} - {{ player.newRating }} ({{ player.difference > 0 ? '+' : '' }}{{ player.difference }})
-            </li>
-          </ul>
+          <h4 [ngClass]="{'bold': match.teamA.goals > match.teamB.goals}">{{ match.teamA.teamName }}</h4>
+          <p class="team-rating">Rating zespołu: {{ match.teamA.teamRating }}</p>
+          <table class="players-table">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Imię Zawodnika</th>
+                <th>Rating</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let player of match.teamA.players; let i = index">
+                <td>{{ i + 1 }}</td>
+                <td>{{ player.id }}</td>
+                <td>{{ player.newRating }} ({{ player.difference > 0 ? '+' : '' }}{{ player.difference }})</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
-        <div class="result">
-          <p>{{ match.teamA.goals }} : {{ match.teamB.goals }}</p>
+        <div class="result-column">
+          <p class="result">{{ match.teamA.goals }} : {{ match.teamB.goals }}</p>
         </div>
         <div class="team">
-          <h4>{{ match.teamB.teamName }}</h4>
-          <p class="team-rating">Rating zespołu: {{ match.teamB.teamRating }}</p> <!-- Dodany rating zespołu -->
-          <ul>
-            <li *ngFor="let player of match.teamB.players; let i = index">
-              {{ i + 1 }}. {{ player.id }} - {{ player.newRating }} ({{ player.difference > 0 ? '+' : '' }}{{ player.difference }})
-            </li>
-          </ul>
+          <h4 [ngClass]="{'bold': match.teamB.goals > match.teamA.goals}">{{ match.teamB.teamName }}</h4>
+          <p class="team-rating">Rating zespołu: {{ match.teamB.teamRating }}</p>
+          <table class="players-table">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Imię Zawodnika</th>
+                <th>Rating</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let player of match.teamB.players; let i = index">
+                <td>{{ i + 1 }}</td>
+                <td>{{ player.id }}</td>
+                <td>{{ player.newRating }} ({{ player.difference > 0 ? '+' : '' }}{{ player.difference }})</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
-      </div>
-      <div class="skarbnik">
-        <p>Skarbnik: {{ match.skarbnik }}</p>
       </div>
     </div>
   </div>
