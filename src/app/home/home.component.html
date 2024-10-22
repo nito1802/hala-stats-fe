@@ -6,7 +6,9 @@
     </mat-card-header>
   
     <mat-card-actions class="next-match-actions">
-      <a mat-button color="primary" [href]="nextMatch.eventLink" target="_blank">Link do wydarzenia</a>
+        <a *ngIf="nextMatch.eventLink" mat-button color="primary" [href]="nextMatch.eventLink" target="_blank">
+            Link do wydarzenia
+          </a>
     </mat-card-actions>
   </mat-card>
 
