@@ -1,0 +1,25 @@
+.schedule-container {
+    width: 80%;
+    margin: 20px auto;
+  }
+  
+  h2 {
+    text-align: center;
+  }
+  
+  table {
+    width: 100%;
+  }
+  
+  .mat-header-cell, .mat-cell {
+    text-align: center;
+  }
+  
+  a.mat-button {
+    text-transform: none; /* Wyłączenie automatycznej kapitalizacji */
+  }
+  
+  .dimmed-row {
+    opacity: 0.4; /* Zmniejszenie widoczności dla anulowanych lub zakończonych meczów */
+  }
+  
