@@ -1,13 +1,53 @@
-.next-match, .matches-history {
+.next-match-card {
+    margin: 20px auto; /* Automatyczne centrowanie karty */
+    max-width: 600px; /* Maksymalna szerokość karty */
+    text-align: center; /* Wyśrodkowanie tekstu w karcie */
+  }
+  
+  .next-match-card mat-card-title {
+    font-size: 1.5em;
+    font-weight: bold;
+  }
+  
+  .next-match-actions {
+    display: flex;
+    justify-content: center;
+  }
+  
+  .next-match, .matches-history {
     margin: 20px;
   }
   
+  h2 {
+    text-align: center; /* Wyśrodkowanie nagłówków h2 */
+  }
+  
   .match-item {
-    margin-bottom: 100px; /* Dodana przestrzeń między meczami */
+    margin-bottom: 20px; /* Dodana przestrzeń między meczami */
   }
   
   .match-header {
     text-align: center;
+  }
+  
+  .match-card-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Wyśrodkowanie zawartości w poziomie */
+    text-align: center; /* Wyśrodkowanie tekstu */
+  }
+  
+  .match-header-avatar {
+    display: none; /* Ukrycie awatara, jeśli nie jest używany */
+  }
+  
+  .mat-card-title {
+    font-size: 1.2em;
+    font-weight: bold;
+  }
+  
+  .mat-card-subtitle {
+    font-style: italic;
   }
   
   .teams {
