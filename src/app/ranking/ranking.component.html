@@ -1,1 +1,33 @@
-<p>ranking works!</p>
+<div class="ranking-container">
+    <h2>Ranking Zawodników</h2>
+    <table mat-table [dataSource]="players" class="mat-elevation-z8">
+      
+      <!-- Index Column -->
+      <ng-container matColumnDef="index">
+        <th mat-header-cell *matHeaderCellDef>#</th>
+        <td mat-cell *matCellDef="let element">{{ element.index ?? '' }}</td>
+      </ng-container>
+  
+      <!-- Player Name Column -->
+      <ng-container matColumnDef="playerName">
+        <th mat-header-cell *matHeaderCellDef>Imię Zawodnika</th>
+        <td mat-cell *matCellDef="let element">{{ element.playerName }}</td>
+      </ng-container>
+  
+      <!-- Elo Rating Column -->
+      <ng-container matColumnDef="eloRating">
+        <th mat-header-cell *matHeaderCellDef>Rating ELO</th>
+        <td mat-cell *matCellDef="let element">{{ element.eloRating }}</td>
+      </ng-container>
+  
+      <!-- Games Count Column -->
+      <ng-container matColumnDef="gamesCount">
+        <th mat-header-cell *matHeaderCellDef>Ilość Występów</th>
+        <td mat-cell *matCellDef="let element">{{ element.gamesCount }}</td>
+      </ng-container>
+  
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </div>
+  
