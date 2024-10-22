@@ -36,6 +36,7 @@
     flex-direction: column;
     align-items: center; /* Wyśrodkowanie zawartości w poziomie */
     text-align: center; /* Wyśrodkowanie tekstu */
+    margin-bottom: 20px;
   }
   
   .match-header-avatar {
@@ -78,7 +79,7 @@
   }
   
   .team-rating {
-    font-style: italic;
+    /*font-style: italic;*/
     margin-bottom: 10px;
   }
   

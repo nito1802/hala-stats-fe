@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { MatButtonModule } from '@angular/material/button'; // Dodaj import MatButtonModule
 import { MatCardModule } from '@angular/material/card'; // Import MatCardModule
+import { BaseUrl } from '../consts/urls'; // Wychodzimy z katalogu 'home' i wchodzimy do 'consts'
 
 
 @Component({
@@ -19,10 +20,10 @@ export class HomeComponent implements OnInit {
   constructor(private http: HttpClient) {}
 
   ngOnInit() {
-    this.http.get<any>('https://localhost:7193/MatchSchedule/next-match')
+    this.http.get<any>(`${BaseUrl}/MatchSchedule/next-match`)
       .subscribe(match => this.nextMatch = match);
 
-    this.http.get<any[]>('https://localhost:7193/Match/matches-history')
+    this.http.get<any[]>(`${BaseUrl}/Match/matches-history`)
       .subscribe(matches => this.matchesHistory = matches);
   }
 }

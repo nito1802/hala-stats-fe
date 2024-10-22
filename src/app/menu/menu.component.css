@@ -1,4 +1,30 @@
-/* menu.component.css */
-.spacer {
-    flex: 1 1 auto;
+mat-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .spacer {
+    flex: 1; /* Tworzy odstęp między logo a nawigacją */
+  }
+  
+  nav a {
+    margin: 0 8px;
+    text-decoration: none; /* Usunięcie podkreślenia linków */
+    color: inherit; /* Dziedziczenie koloru z rodzica, czyli mat-toolbar */
+  }
+  
+  mat-toolbar a.mat-button {
+    text-transform: none; /* Wyłączenie automatycznej kapitalizacji */
+  }
+  
+  nav a:visited,
+  nav a:link,
+  nav a:hover,
+  nav a:active {
+    color: inherit; /* Dziedziczenie koloru we wszystkich stanach linku */
+  }
+  
+  .logo{
+    font-weight: 500;
   }

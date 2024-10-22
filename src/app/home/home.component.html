@@ -11,7 +11,7 @@
   </mat-card>
 
 <div class="matches-history">
-  <h2>Historia Meczów</h2>
+  <h2>Rozegrane mecze</h2>
   <mat-card *ngFor="let match of matchesHistory" class="match-item">
     <mat-card-header class="match-card-header">
         <div mat-card-avatar class="match-header-avatar"></div>
@@ -25,7 +25,7 @@
       <div class="teams">
         <div class="team">
           <h4 [ngClass]="{'bold': match.teamA.goals > match.teamB.goals}">{{ match.teamA.teamName }}</h4>
-          <p class="team-rating">Rating zespołu: {{ match.teamA.teamRating }}</p>
+          <p class="team-rating">Rating zespołu: <strong>{{ match.teamA.teamRating }}</strong></p>
           <table class="players-table">
             <thead>
               <tr>
@@ -56,7 +56,8 @@
         </div>
         <div class="team">
           <h4 [ngClass]="{'bold': match.teamB.goals > match.teamA.goals}">{{ match.teamB.teamName }}</h4>
-          <p class="team-rating">Rating zespołu: {{ match.teamB.teamRating }}</p>
+          <p class="team-rating">Rating zespołu: <strong>{{ match.teamB.teamRating }}</strong></p>
+
           <table class="players-table">
             <thead>
               <tr>
