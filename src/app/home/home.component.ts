@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { MatButtonModule } from '@angular/material/button'; // Dodaj import MatButtonModule
+
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, HttpClientModule], // Dodaj HttpClientModule do importów
+  imports: [CommonModule, HttpClientModule, MatButtonModule], // Dodaj HttpClientModule do importów
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })

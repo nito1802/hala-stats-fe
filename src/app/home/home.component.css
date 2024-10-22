@@ -3,7 +3,7 @@
   }
   
   .match-item {
-    margin-bottom: 40px; /* Dodana przestrzeń między meczami */
+    margin-bottom: 100px; /* Dodana przestrzeń między meczami */
   }
   
   .match-header {
@@ -30,6 +30,9 @@
   
   .result {
     font-size: 1.5em;
+  }
+  
+  .bold {
     font-weight: bold;
   }
   
@@ -53,7 +56,8 @@
     background-color: #f2f2f2;
   }
   
-  .bold {
+  .mat-button {
+    text-transform: none; /* Wyłączenie automatycznego kapitalizowania tekstu */
     font-weight: bold;
   }
   
