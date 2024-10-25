@@ -99,3 +99,19 @@
     display: flex;
     justify-content: center;
   }
+
+  .vs {
+    visibility: visible;
+  }
+
+  @media only screen and (max-width: 1350px) 
+  {
+    .result-column {
+      flex-direction: column;
+    }
+
+    .vs {
+      visibility: hidden;
+    }
+
+  }

@@ -14,7 +14,8 @@ export class MenuComponent implements AfterViewInit  {
     const menuOpen = doc.querySelector(".menu");
     const menuClose = doc.querySelector(".close");
     const overlay = doc.querySelector(".overlay");
-    const overlayContent = doc.querySelector(".overlay__content");
+    const overlayLinks = doc.querySelectorAll(".overlay__content a"); // Pobieramy wszystkie linki w menu mobilnym
+
 
     if (menuOpen && menuClose && overlay) {
       menuOpen.addEventListener("click", () => {
@@ -25,6 +26,13 @@ export class MenuComponent implements AfterViewInit  {
         overlay.classList.remove("overlay--active");
       });
       //overlay__content
+
+      // Dodaj zdarzenie kliknięcia dla każdego linku w menu mobilnym
+      overlayLinks.forEach(link => {
+        link.addEventListener("click", () => {
+          overlay.classList.remove("overlay--active");
+        });
+      });
     }
   }
 }
