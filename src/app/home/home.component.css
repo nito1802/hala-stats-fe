@@ -104,14 +104,26 @@
     visibility: visible;
   }
 
-  @media only screen and (max-width: 1350px) 
-  {
+  @media only screen and (max-width: 1350px) {
+    .teams {
+      flex-direction: column; /* Zmiana układu kolumn zespołów na pionowy */
+      align-items: center; /* Wyśrodkowanie zespołów */
+    }
+  
+    .team {
+      width: 100%; /* Zwiększenie szerokości kolumn zespołów do 100% */
+      margin-bottom: 20px; /* Dodanie odstępu między zespołami */
+    }
+  
     .result-column {
-      flex-direction: column;
+      width: auto; /* Automatyczna szerokość kolumny z wynikiem */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 20px; /* Dodanie odstępu poniżej wyniku */
     }
-
-    .vs {
-      visibility: hidden;
+  
+    .result {
+      font-size: 2em;
     }
-
   }

@@ -44,6 +44,7 @@
             </tbody>
           </table>
         </div>
+      
         <div class="result-column">
           <p class="result">
             <span class="scoreLabel" [ngClass]="{'bold': match.teamA.goals > match.teamB.goals}">
@@ -55,10 +56,10 @@
             </span>
           </p>
         </div>
+      
         <div class="team">
           <h4 [ngClass]="{'bold': match.teamB.goals > match.teamA.goals}">{{ match.teamB.teamName }}</h4>
           <p class="team-rating">Rating zespołu: <strong>{{ match.teamB.teamRating }}</strong></p>
-
           <table class="players-table">
             <thead>
               <tr>
@@ -77,6 +78,7 @@
           </table>
         </div>
       </div>
+      
     </mat-card-content>
   </mat-card>
 </div>
