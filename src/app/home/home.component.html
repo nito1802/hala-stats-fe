@@ -1,31 +1,31 @@
 <h2>Następny Mecz</h2>
 <mat-card class="next-match-card">
-    <mat-card-header class="next-match-header">
-        <mat-card-title>{{ nextMatch.matchDate | date:'EEEE, dd-MM-yyyy HH:mm' | titlecase }}</mat-card-title>
-        <mat-card-subtitle>Skarbnik: <strong>{{ nextMatch.skarbnikId }}</strong></mat-card-subtitle>
-    </mat-card-header>
-  
-    <mat-card-actions class="next-match-actions">
-        <a *ngIf="nextMatch.eventLink" mat-button color="primary" [href]="nextMatch.eventLink" target="_blank">
-            Link do wydarzenia
-          </a>
-    </mat-card-actions>
-  </mat-card>
+  <mat-card-header class="next-match-header">
+    <mat-card-title>{{ nextMatch.matchDate | date:'EEEE, dd-MM-yyyy HH:mm' | titlecase }}</mat-card-title>
+    <mat-card-subtitle>Skarbnik: <strong>{{ nextMatch.skarbnikId }}</strong></mat-card-subtitle>
+  </mat-card-header>
+
+  <mat-card-actions class="next-match-actions">
+    <a *ngIf="nextMatch.eventLink" mat-button color="primary" [href]="nextMatch.eventLink" target="_blank">
+      Link do wydarzenia
+    </a>
+  </mat-card-actions>
+</mat-card>
 
 <div class="matches-history">
   <h2>Rozegrane mecze</h2>
   <mat-card *ngFor="let match of matchesHistory" class="match-item">
     <mat-card-header class="match-card-header">
-        <mat-card-title>{{ match.matchDate | date:'EEEE, dd-MM-yyyy HH:mm' | titlecase }}</mat-card-title>
-        <mat-card-subtitle>Skarbnik: <strong>{{ match.skarbnik }}</strong></mat-card-subtitle>
+      <mat-card-title>{{ match.matchDate | date:'EEEE, dd-MM-yyyy HH:mm' | titlecase }}</mat-card-title>
+      <mat-card-subtitle>Skarbnik: <strong>{{ match.skarbnik }}</strong></mat-card-subtitle>
       <a mat-button color="primary" [href]="match.eventLink" target="_blank">Link do wydarzenia</a>
-
-      </mat-card-header>
+    </mat-card-header>
 
     <mat-card-content>
       <div class="teams">
         <div class="team">
           <h4 [ngClass]="{'bold': match.teamA.goals > match.teamB.goals}">{{ match.teamA.teamName }}</h4>
+          <span class="mobile-scoreLabel" [ngClass]="{'bold': match.teamA.goals > match.teamB.goals}">{{ match.teamA.goals }}</span>
           <p class="team-rating">Rating zespołu: <strong>{{ match.teamA.teamRating }}</strong></p>
           <table class="players-table">
             <thead>
@@ -44,21 +44,18 @@
             </tbody>
           </table>
         </div>
-      
+
         <div class="result-column">
           <p class="result">
-            <span class="scoreLabel" [ngClass]="{'bold': match.teamA.goals > match.teamB.goals}">
-              {{ match.teamA.goals }}
-            </span>
+            <span class="scoreLabel" [ngClass]="{'bold': match.teamA.goals > match.teamB.goals}">{{ match.teamA.goals }}</span>
             <span class="vs">:</span>
-            <span class="scoreLabel" [ngClass]="{'bold': match.teamB.goals > match.teamA.goals}">
-              {{ match.teamB.goals }}
-            </span>
+            <span class="scoreLabel" [ngClass]="{'bold': match.teamB.goals > match.teamA.goals}">{{ match.teamB.goals }}</span>
           </p>
         </div>
-      
+
         <div class="team">
           <h4 [ngClass]="{'bold': match.teamB.goals > match.teamA.goals}">{{ match.teamB.teamName }}</h4>
+          <span class="mobile-scoreLabel" [ngClass]="{'bold': match.teamB.goals > match.teamA.goals}">{{ match.teamB.goals }}</span>
           <p class="team-rating">Rating zespołu: <strong>{{ match.teamB.teamRating }}</strong></p>
           <table class="players-table">
             <thead>
@@ -78,7 +75,6 @@
           </table>
         </div>
       </div>
-      
     </mat-card-content>
   </mat-card>
 </div>

@@ -1,129 +1,135 @@
 .next-match-card {
-    margin: 20px auto; /* Automatyczne centrowanie karty */
-    max-width: 600px; /* Maksymalna szerokość karty */
-    text-align: center; /* Wyśrodkowanie tekstu w karcie */
-  }
-  
-  .next-match-actions {
-    display: flex;
-    justify-content: center;
-  }
-  
-  .next-match, .matches-history {
-      margin: 20px;
-      margin-top: 40px;
-  }
-  
-  h2 {
-    text-align: center; /* Wyśrodkowanie nagłówków h2 */
-  }
-  
-  .match-item {
-    margin-bottom: 20px; /* Dodana przestrzeń między meczami */
-  }
-  
-  .match-header {
-    text-align: center;
-  }
-  
-  .match-card-header {
-    display: flex;
-    flex-direction: column;
-    align-items: center; /* Wyśrodkowanie zawartości w poziomie */
-    text-align: center; /* Wyśrodkowanie tekstu */
-    margin-bottom: 20px;
-  }
-  
-  .mat-card-title {
-    font-size: 1.2em;
-    font-weight: bold;
-  }
-  
-  .mat-card-subtitle {
-    font-style: italic;
-  }
-  
+  margin: 20px auto; /* Automatyczne centrowanie karty */
+  max-width: 600px; /* Maksymalna szerokość karty */
+  text-align: center; /* Wyśrodkowanie tekstu w karcie */
+}
+
+.next-match-actions {
+  display: flex;
+  justify-content: center;
+}
+
+.next-match, .matches-history {
+  margin: 20px;
+  margin-top: 40px;
+}
+
+h2 {
+  text-align: center; /* Wyśrodkowanie nagłówków h2 */
+}
+
+.match-item {
+  margin-bottom: 20px; /* Dodana przestrzeń między meczami */
+}
+
+.match-header {
+  text-align: center;
+}
+
+.match-card-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Wyśrodkowanie zawartości w poziomie */
+  text-align: center; /* Wyśrodkowanie tekstu */
+  margin-bottom: 20px;
+}
+
+.mat-card-title {
+  font-size: 1.2em;
+  font-weight: bold;
+}
+
+.mat-card-subtitle {
+  font-style: italic;
+}
+
+.teams {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start; /* Wyrównanie kolumn do góry */
+}
+
+.team {
+  width: 45%; /* Dostosowanie szerokości kolumn zespołów */
+  text-align: center; /* Wyśrodkowanie zawartości */
+}
+
+.result-column {
+  width: 10%; /* Szerokość kolumny ze wynikiem */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.result {
+  margin-top: 25px;
+  font-size: 2.5em;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.team-rating {
+  margin-bottom: 10px;
+}
+
+.players-table {
+  width: 100%;
+  margin: 0 auto;
+  border-collapse: collapse;
+}
+
+.players-table th, .players-table td {
+  padding: 8px;
+  border: 1px solid #ddd;
+}
+
+.players-table th {
+  background-color: #f2f2f2;
+}
+
+.mat-button {
+  text-transform: none;
+  font-weight: bold;
+}
+
+.mobile-scoreLabel {
+  visibility: hidden;
+}
+
+@media only screen and (max-width: 768px) {
   .teams {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start; /* Wyrównanie kolumn do góry */
-  }
-  
-  .team {
-    width: 45%; /* Dostosowanie szerokości kolumn zespołów */
-    text-align: center; /* Wyśrodkowanie zawartości */
-  }
-  
-  .result-column {
-    width: 10%; /* Szerokość kolumny ze wynikiem */
-    display: flex;
-    justify-content: center;
+    flex-direction: column; /* Zmiana układu kolumn zespołów na pionowy */
     align-items: center;
   }
-  
-  .result {
-    font-size: 2.5em;
+
+  .team {
+    width: 100%; /* Zwiększenie szerokości kolumn zespołów do 100% */
+    margin-bottom: 20px; /* Dodanie odstępu między zespołami */
   }
-  
-  .bold {
-    font-weight: bold;
+
+  .result-column {
+    width: auto;
+    display: none; /* Ukrycie centralnego wyniku */
   }
-  
-  .team-rating {
-    /*font-style: italic;*/
-    margin-bottom: 10px;
-  }
-  
-  .players-table {
-    width: 100%;
-    margin: 0 auto;
-    border-collapse: collapse;
-  }
-  
-  .players-table th, .players-table td {
-    padding: 8px;
-    border: 1px solid #ddd;
-  }
-  
-  .players-table th {
-    background-color: #f2f2f2;
-  }
-  
-  .mat-button {
-    text-transform: none; /* Wyłączenie automatycznego kapitalizowania tekstu */
-    font-weight: bold;
-  }
-  
-  .next-match-header {
-    width: 100%;
+
+  .team-header {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
+    width: 100%;
+    align-items: center; /* Wyrównanie elementów w poziomie */
   }
 
-  .vs {
+  .team-result {
+    font-size: 2em;
+    margin-left: 20px;
+  }
+
+  .mobile-scoreLabel {
     visibility: visible;
+    margin: 0;
+    padding: 0;
+    font-size: 2em;
   }
-
-  @media only screen and (max-width: 1350px) {
-    .teams {
-      flex-direction: column; /* Zmiana układu kolumn zespołów na pionowy */
-      align-items: center; /* Wyśrodkowanie zespołów */
-    }
-  
-    .team {
-      width: 100%; /* Zwiększenie szerokości kolumn zespołów do 100% */
-      margin-bottom: 20px; /* Dodanie odstępu między zespołami */
-    }
-  
-    .result-column {
-      width: auto; /* Automatyczna szerokość kolumny z wynikiem */
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      margin-bottom: 20px; /* Dodanie odstępu poniżej wyniku */
-    }
-  
-    .result {
-      font-size: 2em;
-    }
-  }
+}
