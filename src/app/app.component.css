@@ -1,0 +1,12 @@
+app-menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000; /* Aby menu było zawsze nad innymi elementami */
+  }
+
+  .main-content {
+    margin-top: 90px; /* Dopasuj tę wartość do wysokości menu */
+    padding: 20px; /* Opcjonalnie, dodanie paddingu dla lepszej estetyki */
+  }

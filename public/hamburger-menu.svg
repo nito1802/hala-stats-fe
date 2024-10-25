@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="50" height="43" viewBox="0 0 50 43">
+  <defs>
+    <clipPath id="clip-path">
+      <rect width="50" height="43" fill="none"/>
+    </clipPath>
+  </defs>
+  <g id="hamburger_menu" data-name="hamburger menu" clip-path="url(#clip-path)">
+    <g transform="translate(-299 -18)">
+      <rect id="Rectangle_16" data-name="Rectangle 16" width="63" height="5" transform="translate(299 18)"/>
+    </g>
+    <g transform="translate(-299 -1)">
+      <rect id="Rectangle_16-2" data-name="Rectangle 16" width="63" height="5" transform="translate(299 18)"/>
+    </g>
+    <g transform="translate(-299 16)">
+      <rect id="Rectangle_16-3" data-name="Rectangle 16" width="63" height="5" transform="translate(299 18)"/>
+    </g>
+  </g>
+</svg>

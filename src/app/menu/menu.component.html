@@ -1,10 +1,31 @@
-<mat-toolbar color="primary">
-    <span class="logo">Hala Stats</span>
-    <span class="spacer"></span>
-    <nav>
-      <a mat-button color="accent" routerLink="/">Strona Główna</a>
-      <a mat-button color="accent" routerLink="/terminarz">Terminarz meczów</a>
-      <a mat-button color="accent" routerLink="/ranking">Ranking zawodników</a>
-    </nav>
-  </mat-toolbar>
-  
+<header>
+  <a class="logo" href="index.html"
+    ><img alt="Zakład Stolarski DrewRos Logo" src="hala-logo.svg"
+  /></a>
+
+  <nav>
+    <ul class="nav__links">
+      <li>
+        <a routerLink="/">Strona Główna</a>
+      </li>
+      <li>
+        <a routerLink="/terminarz">Terminarz meczów</a>
+      </li>
+      <li>
+        <a routerLink="/ranking">Ranking zawodników</a>
+      </li>
+    </ul>
+  </nav>
+  <p class="menu mobile-menu-container menu_item">
+    <!-- MENU <i class="menu_item"></i> -->
+    <img src="hamburger-menu.svg" />
+  </p>
+</header>
+<div id="mobile__menu" class="overlay">
+  <a id="menu-close-menu-mobile" class="close">x</a>
+  <div class="overlay__content">
+    <a routerLink="/">Strona Główna</a>
+    <a routerLink="/terminarz">Terminarz meczów</a>
+    <a routerLink="/ranking">Ranking zawodników</a>
+  </div>
+</div>
