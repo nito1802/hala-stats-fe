@@ -4,11 +4,6 @@
     text-align: center; /* Wyśrodkowanie tekstu w karcie */
   }
   
-  .next-match-card mat-card-title {
-    font-size: 1.5em;
-    font-weight: bold;
-  }
-  
   .next-match-actions {
     display: flex;
     justify-content: center;
@@ -37,10 +32,6 @@
     align-items: center; /* Wyśrodkowanie zawartości w poziomie */
     text-align: center; /* Wyśrodkowanie tekstu */
     margin-bottom: 20px;
-  }
-  
-  .match-header-avatar {
-    display: none; /* Ukrycie awatara, jeśli nie jest używany */
   }
   
   .mat-card-title {
