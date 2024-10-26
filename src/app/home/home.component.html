@@ -2,14 +2,60 @@
 <mat-card class="next-match-card">
   <mat-card-header class="next-match-header">
     <mat-card-title>{{ nextMatch.matchDate | date:'EEEE, dd-MM-yyyy HH:mm' | titlecase }}</mat-card-title>
-    <mat-card-subtitle>Skarbnik: <strong>{{ nextMatch.skarbnikId }}</strong></mat-card-subtitle>
+    <mat-card-subtitle>Skarbnik: <strong>{{ nextMatch.skarbnikId }}</strong>
+      <mat-card-actions class="next-match-actions">
+        <a *ngIf="nextMatch.eventLink" mat-button color="primary" [href]="nextMatch.eventLink" target="_blank">
+          Link do wydarzenia
+        </a>
+      </mat-card-actions>
+    </mat-card-subtitle>
   </mat-card-header>
 
-  <mat-card-actions class="next-match-actions">
-    <a *ngIf="nextMatch.eventLink" mat-button color="primary" [href]="nextMatch.eventLink" target="_blank">
-      Link do wydarzenia
-    </a>
-  </mat-card-actions>
+  <mat-card-content>
+    <div class="teams">
+      <div class="team">
+        <h4>{{ nextMatch.teamA.teamName }}</h4>
+        <p class="team-rating">Rating zespołu: <strong>{{ nextMatch.teamA.teamRating }}</strong></p>
+        <table class="players-table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Imię Zawodnika</th>
+              <th>Rating</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let player of nextMatch.teamA.players; let i = index">
+              <td>{{ i + 1 }}</td>
+              <td>{{ player.id }}</td>
+              <td>{{ player.newRating }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="team">
+        <h4>{{ nextMatch.teamB.teamName }}</h4>
+        <p class="team-rating">Rating zespołu: <strong>{{ nextMatch.teamB.teamRating }}</strong></p>
+        <table class="players-table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Imię Zawodnika</th>
+              <th>Rating</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let player of nextMatch.teamB.players; let i = index">
+              <td>{{ i + 1 }}</td>
+              <td>{{ player.id }}</td>
+              <td>{{ player.newRating }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </mat-card-content>
 </mat-card>
 
 <div class="matches-history">

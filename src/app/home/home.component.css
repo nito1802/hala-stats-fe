@@ -1,7 +1,7 @@
 .next-match-card {
-  margin: 20px auto; /* Automatyczne centrowanie karty */
-  max-width: 600px; /* Maksymalna szerokość karty */
-  text-align: center; /* Wyśrodkowanie tekstu w karcie */
+  margin: 20px auto;
+  max-width: 600px;
+  text-align: center;
 }
 
 .next-match-actions {
@@ -15,22 +15,23 @@
 }
 
 h2 {
-  text-align: center; /* Wyśrodkowanie nagłówków h2 */
-}
-
-.match-item {
-  margin-bottom: 20px; /* Dodana przestrzeń między meczami */
-}
-
-.match-header {
   text-align: center;
+}
+
+.match-item, .next-match-card {
+  margin-bottom: 20px;
+}
+
+.match-header, .next-match-header {
+  text-align: center;
+  justify-content: center;
 }
 
 .match-card-header {
   display: flex;
   flex-direction: column;
-  align-items: center; /* Wyśrodkowanie zawartości w poziomie */
-  text-align: center; /* Wyśrodkowanie tekstu */
+  align-items: center;
+  text-align: center;
   margin-bottom: 20px;
 }
 
@@ -46,16 +47,16 @@ h2 {
 .teams {
   display: flex;
   justify-content: space-between;
-  align-items: flex-start; /* Wyrównanie kolumn do góry */
+  align-items: flex-start;
 }
 
 .team {
-  width: 45%; /* Dostosowanie szerokości kolumn zespołów */
-  text-align: center; /* Wyśrodkowanie zawartości */
+  width: 45%;
+  text-align: center;
 }
 
 .result-column {
-  width: 10%; /* Szerokość kolumny ze wynikiem */
+  width: 10%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -100,25 +101,25 @@ h2 {
 
 @media only screen and (max-width: 768px) {
   .teams {
-    flex-direction: column; /* Zmiana układu kolumn zespołów na pionowy */
+    flex-direction: column;
     align-items: center;
   }
 
   .team {
-    width: 100%; /* Zwiększenie szerokości kolumn zespołów do 100% */
-    margin-bottom: 20px; /* Dodanie odstępu między zespołami */
+    width: 100%;
+    margin-bottom: 20px;
   }
 
   .result-column {
     width: auto;
-    display: none; /* Ukrycie centralnego wyniku */
+    display: none;
   }
 
   .team-header {
     display: flex;
     justify-content: space-between;
     width: 100%;
-    align-items: center; /* Wyrównanie elementów w poziomie */
+    align-items: center;
   }
 
   .team-result {
