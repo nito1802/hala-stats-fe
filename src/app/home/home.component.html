@@ -12,8 +12,8 @@
   </mat-card-header>
 
   <mat-card-content>
-    <div class="teams">
-      <div class="team">
+    <div class="teams" *ngIf="nextMatch.teamA || nextMatch.teamB">
+      <div class="team" *ngIf="nextMatch.teamA">
         <h4>{{ nextMatch.teamA.teamName }}</h4>
         <p class="team-rating">Rating zespołu: <strong>{{ nextMatch.teamA.teamRating }}</strong></p>
         <table class="players-table">
@@ -34,7 +34,7 @@
         </table>
       </div>
 
-      <div class="team">
+      <div class="team" *ngIf="nextMatch.teamB">
         <h4>{{ nextMatch.teamB.teamName }}</h4>
         <p class="team-rating">Rating zespołu: <strong>{{ nextMatch.teamB.teamRating }}</strong></p>
         <table class="players-table">
@@ -57,6 +57,7 @@
     </div>
   </mat-card-content>
 </mat-card>
+
 
 <div class="matches-history">
   <h2>Rozegrane mecze</h2>
