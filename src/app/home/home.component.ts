@@ -26,4 +26,43 @@ export class HomeComponent implements OnInit {
     this.http.get<any[]>(`${BaseUrl}/Match/matches-history`)
       .subscribe(matches => this.matchesHistory = matches);
   }
+
+  getFormattedDate(date: string | Date): string {
+    const parsedDate = new Date(date);
+  
+    // Ustawienia dla dnia tygodnia, dnia, roku i odmiany miesiąca w dopełniaczu
+    const day = parsedDate.getDate();
+    const year = parsedDate.getFullYear();
+  
+    const weekday = parsedDate.toLocaleDateString('pl-PL', { weekday: 'long' });
+    const formattedWeekday = weekday.charAt(0).toUpperCase() + weekday.slice(1);
+  
+    // Mapa odmian miesięcy w dopełniaczu
+    const monthInGenitive: { [key: string]: string } = {
+      'styczeń': 'Stycznia',
+      'luty': 'Lutego',
+      'marzec': 'Marca',
+      'kwiecień': 'Kwietnia',
+      'maj': 'Maja',
+      'czerwiec': 'Czerwca',
+      'lipiec': 'Lipca',
+      'sierpień': 'Sierpnia',
+      'wrzesień': 'Września',
+      'październik': 'Października',
+      'listopad': 'Listopada',
+      'grudzień': 'Grudnia'
+    };
+  
+    // Pobierz miesiąc w mianowniku i przemapuj na dopełniacz
+    const month = parsedDate.toLocaleDateString('pl-PL', { month: 'long' }).toLowerCase();
+    const formattedMonth = monthInGenitive[month] || month; // Bezpieczne użycie mapy
+  
+    // Ustawienie godziny i minuty
+    const time = parsedDate.toLocaleTimeString('pl-PL', { hour: '2-digit', minute: '2-digit' });
+  
+    // Pożądany format daty
+    return `${formattedWeekday}, ${day} ${formattedMonth} ${year} - ${time}`;
+  }
+  
+  
 }
