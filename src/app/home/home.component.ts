@@ -4,7 +4,7 @@ import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { MatButtonModule } from '@angular/material/button'; // Dodaj import MatButtonModule
 import { MatCardModule } from '@angular/material/card'; // Import MatCardModule
 import { BaseUrl } from '../consts/urls'; // Wychodzimy z katalogu 'home' i wchodzimy do 'consts'
-
+import { SignalRService } from '../services/signal-r.service';
 
 @Component({
   selector: 'app-home',
@@ -16,8 +16,9 @@ import { BaseUrl } from '../consts/urls'; // Wychodzimy z katalogu 'home' i wcho
 export class HomeComponent implements OnInit {
   nextMatch: any;
   matchesHistory: any[] = [];
+  counter: number = 0;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private signalRService: SignalRService) {}
 
   ngOnInit() {
     this.http.get<any>(`${BaseUrl}/MatchSchedule/next-match`)
@@ -25,6 +26,11 @@ export class HomeComponent implements OnInit {
 
     this.http.get<any[]>(`${BaseUrl}/Match/matches-history`)
       .subscribe(matches => this.matchesHistory = matches);
+
+      this.signalRService.startConnection();
+    this.signalRService.counter$.subscribe(value => {
+      this.counter = value; // Przypisanie wartości licznika
+    });
   }
 
   getFormattedDate(date: string | Date): string {
