@@ -9,6 +9,9 @@ import { BaseUrl } from '../consts/urls'; // Wychodzimy z katalogu 'home' i wcho
 export class SignalRService {
   private hubConnection!: signalR.HubConnection;
   public counter$: BehaviorSubject<number> = new BehaviorSubject<number>(0);
+  public score$: BehaviorSubject<number> = new BehaviorSubject<number>(0);
+  public matchInProgress$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+
   private readonly reconnectInterval = 5000;  // Retry co 5 sekund
   private readonly maxRetryTime = 120000;     // Maksymalny czas retry – 2 minuty
   private reconnectAttempts = 0;
@@ -28,48 +31,57 @@ export class SignalRService {
     // Uruchomienie połączenia
     this.startHubConnection();
 
-    // Nasłuchiwanie na komunikaty
+    // Licznik
     this.hubConnection.on('ReceiveCounter', (count: number) => {
       this.counter$.next(count);
     });
 
-    // Obsługa błędów połączenia
+    // Wynik meczu (aktualizacja na żywo)
+    this.hubConnection.on('ReceiveScoreUpdate', (matchId: number, score: number) => {
+      console.log(`Match ${matchId} updated, score: ${score}`);
+      this.score$.next(score);
+    });
+
+    // Start meczu
+    this.hubConnection.on('MatchBegin', () => {
+      console.log('Match has started!');
+      this.matchInProgress$.next(true);
+    });
+
     this.hubConnection.onclose(err => {
       console.error('WebSocket closed', err);
-      this.handleReconnect(err);  // Retry jeśli połączenie się zamknie
+      this.handleReconnect(err);
     });
   }
 
-  // Start połączenia + retry
   private startHubConnection() {
     this.hubConnection.start()
       .then(() => {
         console.log('SignalR connected');
         this.reconnectAttempts = 0;
-        this.hubConnection.invoke('StartCounting');  // Inicjalizacja licznika
+        //this.hubConnection.invoke('StartCounting');  // Inicjalizacja licznika
       })
       .catch(err => this.handleReconnect(err));
   }
 
-  // Retry logika
-  private handleReconnect(err: any) {
-    if (this.isReconnecting || this.reconnectAttempts >= (this.maxRetryTime / this.reconnectInterval)) {
-      console.error('Max retry attempts reached. Connection failed.');
-      return;
-    }
-
-    this.isReconnecting = true;
-    console.warn(`Retry attempt ${this.reconnectAttempts + 1}...`);
-
-    setTimeout(() => {
-      this.startHubConnection();
-      this.reconnectAttempts++;
-      this.isReconnecting = false;
-    }, this.reconnectInterval);
-  }
-
-  // Zatrzymanie połączenia
   public stopConnection(): void {
     this.hubConnection.stop();
   }
+
+    // Retry logika
+    private handleReconnect(err: any) {
+      if (this.isReconnecting || this.reconnectAttempts >= (this.maxRetryTime / this.reconnectInterval)) {
+        console.error('Max retry attempts reached. Connection failed.');
+        return;
+      }
+  
+      this.isReconnecting = true;
+      console.warn(`Retry attempt ${this.reconnectAttempts + 1}...`);
+  
+      setTimeout(() => {
+        this.startHubConnection();
+        this.reconnectAttempts++;
+        this.isReconnecting = false;
+      }, this.reconnectInterval);
+    }
 }

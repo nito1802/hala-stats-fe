@@ -5,6 +5,10 @@ import { MatButtonModule } from '@angular/material/button'; // Dodaj import MatB
 import { MatCardModule } from '@angular/material/card'; // Import MatCardModule
 import { BaseUrl } from '../consts/urls'; // Wychodzimy z katalogu 'home' i wchodzimy do 'consts'
 import { SignalRService } from '../services/signal-r.service';
+import { Subject } from 'rxjs';
+import { takeUntil, distinctUntilChanged } from 'rxjs/operators';
+import { isPlatformBrowser } from '@angular/common';
+import { PLATFORM_ID, Inject } from '@angular/core';
 
 @Component({
   selector: 'app-home',
@@ -17,8 +21,11 @@ export class HomeComponent implements OnInit {
   nextMatch: any;
   matchesHistory: any[] = [];
   counter: number = 0;
+  score: number | null = null;
+  matchInProgress: boolean = false;
+  private destroy$ = new Subject<void>();
 
-  constructor(private http: HttpClient, private signalRService: SignalRService) {}
+  constructor(private http: HttpClient, private signalRService: SignalRService, @Inject(PLATFORM_ID) private platformId: any) {}
 
   ngOnInit() {
     this.http.get<any>(`${BaseUrl}/MatchSchedule/next-match`)
@@ -27,10 +34,30 @@ export class HomeComponent implements OnInit {
     this.http.get<any[]>(`${BaseUrl}/Match/matches-history`)
       .subscribe(matches => this.matchesHistory = matches);
 
-      this.signalRService.startConnection();
+     // Uruchom SignalR tylko po stronie przeglądarki
+  if (isPlatformBrowser(this.platformId)) {
+    this.signalRService.startConnection();
+
     this.signalRService.counter$.subscribe(value => {
-      this.counter = value; // Przypisanie wartości licznika
+      this.counter = value;
     });
+
+    this.signalRService.score$.subscribe(value => {
+      this.score = value;
+    });
+
+    this.signalRService.matchInProgress$
+      .pipe(
+        distinctUntilChanged(),
+        takeUntil(this.destroy$)
+      )
+      .subscribe(isInProgress => {
+        if (isInProgress) {
+          this.http.get<any>(`${BaseUrl}/MatchSchedule/next-match`)
+            .subscribe(match => this.nextMatch = match);
+        }
+      });
+  }
   }
 
   getFormattedDate(date: string | Date): string {

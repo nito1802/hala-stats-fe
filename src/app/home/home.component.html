@@ -1,5 +1,7 @@
-<h2>Następny Mecz</h2>
-<h1>Licznik: {{ counter }}</h1>
+
+<h2>{{ nextMatch.state === 'Live' ? 'Trwający mecz' : 'Następny Mecz' }}</h2>
+
+
 <mat-card class="next-match-card">
   <mat-card-header class="next-match-header">
     <mat-card-title>{{ getFormattedDate(nextMatch.matchDate) }}</mat-card-title>
@@ -11,7 +13,18 @@
       </mat-card-actions>
     </mat-card-subtitle>
   </mat-card-header>
-
+  <ng-container *ngIf="nextMatch.state === 'Live'; else hideCounter">
+    <h2>{{ counter }}</h2>
+  </ng-container>
+  
+  <ng-template #hideCounter></ng-template>
+  <!-- <div class="result-column">
+    <p class="result">
+      <span class="scoreLabel" [ngClass]="{'bold': nextMatch.teamA.goals > nextMatch.teamB.goals}">{{ nextMatch.teamA.goals }}</span>
+      <span class="vs">:</span>
+      <span class="scoreLabel" [ngClass]="{'bold': nextMatch.teamB.goals > nextMatch.teamA.goals}">{{ nextMatch.teamB.goals }}</span>
+    </p>
+  </div> -->
   <mat-card-content>
     <div class="teams" *ngIf="nextMatch.teamA || nextMatch.teamB">
       <div class="team" *ngIf="nextMatch.teamA">
@@ -44,6 +57,7 @@
               <th>#</th>
               <th>Imię Zawodnika</th>
               <th>Rating</th>
+              <th>Gole</th>
             </tr>
           </thead>
           <tbody>
@@ -51,6 +65,7 @@
               <td>{{ i + 1 }}</td>
               <td>{{ player.id }}</td>
               <td>{{ player.newRating }}</td>
+              <td>{{ player.goals }}</td>
             </tr>
           </tbody>
         </table>
