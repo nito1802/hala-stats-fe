@@ -140,3 +140,46 @@ h2 {
     font-size: 2em;
   }
 }
+
+.timeline {
+  margin: 20px 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 1em;
+}
+
+.timeline-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  max-width: 600px;
+  padding: 10px 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.timeline-item:last-child {
+  border-bottom: none;
+}
+
+.timeline-min {
+  flex: 0 0 50px;
+  text-align: right;
+  font-weight: bold;
+  color: #444;
+}
+
+.timeline-player {
+  flex: 1;
+  text-align: left;
+  padding-left: 10px;
+}
+
+.timeline-team {
+  flex: 0 0 100px;
+  text-align: right;
+  font-style: italic;
+  color: #666;
+}

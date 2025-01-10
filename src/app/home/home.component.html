@@ -25,6 +25,16 @@
       <span class="scoreLabel" [ngClass]="{'bold': nextMatch.teamB.goalsCount > nextMatch.teamA.goalsCount}">{{ nextMatch.teamB.goalsCount }}</span>
     </p>
   </div>
+
+  <!-- Sekcja osi czasu -->
+<div class="timeline" *ngIf="nextMatch.goals && nextMatch.goals.length">
+  <div *ngFor="let goal of nextMatch.goals" class="timeline-item">
+    <span class="timeline-min">{{ getGoalMinute(goal.goalTimespan) }}'</span>
+    <span class="timeline-player">{{ goal.playerId }}</span>
+    <span class="timeline-team">{{ goal.teamName }}</span>
+  </div>
+</div>
+
   <mat-card-content>
     <div class="teams" *ngIf="nextMatch.teamA || nextMatch.teamB">
       <div class="team" *ngIf="nextMatch.teamA">

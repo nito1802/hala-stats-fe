@@ -107,5 +107,10 @@ export class HomeComponent implements OnInit {
     return `${formattedWeekday}, ${day} ${formattedMonth} ${year} - ${time}`;
   }
   
+  getGoalMinute(goalTimespan: string): number {
+    const time = goalTimespan.split(':');
+    const minutes = parseInt(time[0], 10) * 60 + parseInt(time[1], 10); // Godziny * 60 + minuty
+    return minutes;
+  }
   
 }
