@@ -29,7 +29,10 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
     this.http.get<any>(`${BaseUrl}/MatchSchedule/next-match`)
-      .subscribe(match => this.nextMatch = match);
+      .subscribe(match => {
+        this.nextMatch = match;
+
+      } );
 
     this.http.get<any[]>(`${BaseUrl}/Match/matches-history`)
       .subscribe(matches => this.matchesHistory = matches);
@@ -65,6 +68,7 @@ export class HomeComponent implements OnInit {
       if (scoreUpdate) {
         console.log('Aktualizacja nextMatch:', scoreUpdate);
         this.nextMatch = { ...this.nextMatch, ...scoreUpdate };
+
       }
     });
   }
@@ -112,5 +116,6 @@ export class HomeComponent implements OnInit {
     const minutes = parseInt(time[0], 10) * 60 + parseInt(time[1], 10); // Godziny * 60 + minuty
     return minutes;
   }
+
   
 }

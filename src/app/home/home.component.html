@@ -26,14 +26,21 @@
     </p>
   </div>
 
-  <!-- Sekcja osi czasu -->
-<div class="timeline" *ngIf="nextMatch.goals && nextMatch.goals.length">
-  <div *ngFor="let goal of nextMatch.goals" class="timeline-item">
-    <span class="timeline-min">{{ getGoalMinute(goal.goalTimespan) }}'</span>
-    <span class="timeline-player">{{ goal.playerId }}</span>
-    <span class="timeline-team">{{ goal.teamName }}</span>
+  <div class="timeline" *ngIf="nextMatch.goals && nextMatch.goals.length">
+    <div *ngFor="let goal of nextMatch.goals" class="timeline-item">
+      <!-- Gole drużyny A -->
+      <div *ngIf="goal.teamName === nextMatch.teamA.teamName" class="timeline-item-left">
+        <span class="timeline-min">{{ getGoalMinute(goal.goalTimespan) }}'</span>
+        <span class="timeline-player">{{ goal.playerId }}</span>
+      </div>
+  
+      <!-- Gole drużyny B -->
+      <div *ngIf="goal.teamName === nextMatch.teamB.teamName" class="timeline-item-right">
+        <span class="timeline-min">{{ getGoalMinute(goal.goalTimespan) }}'</span>
+        <span class="timeline-player">{{ goal.playerId }}</span>
+      </div>
+    </div>
   </div>
-</div>
 
   <mat-card-content>
     <div class="teams" *ngIf="nextMatch.teamA || nextMatch.teamB">
@@ -99,8 +106,8 @@
     <mat-card-content>
       <div class="teams">
         <div class="team">
-          <h4 [ngClass]="{'bold': match.teamA.goals > match.teamB.goals}">{{ match.teamA.teamName }}</h4>
-          <span class="mobile-scoreLabel" [ngClass]="{'bold': match.teamA.goals > match.teamB.goals}">{{ match.teamA.goals }}</span>
+          <h4 [ngClass]="{'bold': match.teamA.goalsCount > match.teamB.goalsCount}">{{ match.teamA.teamName }}</h4>
+          <span class="mobile-scoreLabel" [ngClass]="{'bold': match.teamA.goalsCount > match.teamB.goalsCount}">{{ match.teamA.goalsCount }}</span>
           <p class="team-rating">Rating zespołu: <strong>{{ match.teamA.teamRating }}</strong></p>
           <table class="players-table">
             <thead>
@@ -108,6 +115,7 @@
                 <th>#</th>
                 <th>Imię Zawodnika</th>
                 <th>Rating</th>
+                <th>Gole</th>
               </tr>
             </thead>
             <tbody>
@@ -115,6 +123,7 @@
                 <td>{{ i + 1 }}</td>
                 <td>{{ player.id }}</td>
                 <td>{{ player.newRating }} ({{ player.difference > 0 ? '+' : '' }}{{ player.difference }})</td>
+                <td>{{ player.goals }}</td>
               </tr>
             </tbody>
           </table>
@@ -122,14 +131,14 @@
 
         <div class="result-column">
           <p class="result">
-            <span class="scoreLabel" [ngClass]="{'bold': match.teamA.goals > match.teamB.goals}">{{ match.teamA.goals }}</span>
+            <span class="scoreLabel" [ngClass]="{'bold': match.teamA.goalsCount > match.teamB.goalsCount}">{{ match.teamA.goalsCount }}</span>
             <span class="vs">:</span>
-            <span class="scoreLabel" [ngClass]="{'bold': match.teamB.goals > match.teamA.goals}">{{ match.teamB.goals }}</span>
+            <span class="scoreLabel" [ngClass]="{'bold': match.teamB.goalsCount > match.teamA.goalsCount}">{{ match.teamB.goalsCount }}</span>
           </p>
         </div>
 
         <div class="team">
-          <h4 [ngClass]="{'bold': match.teamB.goals > match.teamA.goals}">{{ match.teamB.teamName }}</h4>
+          <h4 [ngClass]="{'bold': match.teamB.goalsCount > match.teamA.goalsCount}">{{ match.teamB.teamName }}</h4>
           <span class="mobile-scoreLabel" [ngClass]="{'bold': match.teamB.goals > match.teamA.goals}">{{ match.teamB.goals }}</span>
           <p class="team-rating">Rating zespołu: <strong>{{ match.teamB.teamRating }}</strong></p>
           <table class="players-table">
@@ -138,6 +147,7 @@
                 <th>#</th>
                 <th>Imię Zawodnika</th>
                 <th>Rating</th>
+                <th>Gole</th>
               </tr>
             </thead>
             <tbody>
@@ -145,6 +155,7 @@
                 <td>{{ i + 1 }}</td>
                 <td>{{ player.id }}</td>
                 <td>{{ player.newRating }} ({{ player.difference > 0 ? '+' : '' }}{{ player.difference }})</td>
+                <td>{{ player.goals }}</td>
               </tr>
             </tbody>
           </table>
