@@ -62,9 +62,15 @@ h2 {
   align-items: center;
 }
 
-.result {
-  margin-top: 25px;
-  font-size: 2.5em;
+.result-column-next-match {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.result-next-match {
+  font-size: 4.5em;
 }
 
 .bold {
