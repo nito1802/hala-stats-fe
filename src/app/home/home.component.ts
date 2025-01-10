@@ -57,6 +57,16 @@ export class HomeComponent implements OnInit {
             .subscribe(match => this.nextMatch = match);
         }
       });
+
+      // Subskrypcja aktualizacji wyniku
+    this.signalRService.scoreUpdate$
+    .pipe(takeUntil(this.destroy$))
+    .subscribe(scoreUpdate => {
+      if (scoreUpdate) {
+        console.log('Aktualizacja nextMatch:', scoreUpdate);
+        this.nextMatch = { ...this.nextMatch, ...scoreUpdate };
+      }
+    });
   }
   }
 

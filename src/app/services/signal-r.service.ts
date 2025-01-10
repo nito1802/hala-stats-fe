@@ -11,6 +11,7 @@ export class SignalRService {
   public counter$: BehaviorSubject<number> = new BehaviorSubject<number>(0);
   public score$: BehaviorSubject<number> = new BehaviorSubject<number>(0);
   public matchInProgress$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  public scoreUpdate$: BehaviorSubject<any> = new BehaviorSubject<any>(null);
 
   private readonly reconnectInterval = 5000;  // Retry co 5 sekund
   private readonly maxRetryTime = 120000;     // Maksymalny czas retry – 2 minuty
@@ -36,10 +37,10 @@ export class SignalRService {
       this.counter$.next(count);
     });
 
-    // Wynik meczu (aktualizacja na żywo)
-    this.hubConnection.on('ReceiveScoreUpdate', (matchId: number, score: number) => {
-      console.log(`Match ${matchId} updated, score: ${score}`);
-      this.score$.next(score);
+     // Obsługa aktualizacji wyniku
+     this.hubConnection.on('ReceiveScoreUpdate', (scoreUpdate: any) => {
+      console.log('Otrzymano aktualizację wyniku:', scoreUpdate);
+      this.scoreUpdate$.next(scoreUpdate);
     });
 
     // Start meczu
