@@ -139,7 +139,7 @@
 
         <div class="team">
           <h4 [ngClass]="{'bold': match.teamB.goalsCount > match.teamA.goalsCount}">{{ match.teamB.teamName }}</h4>
-          <span class="mobile-scoreLabel" [ngClass]="{'bold': match.teamB.goals > match.teamA.goals}">{{ match.teamB.goals }}</span>
+          <span class="mobile-scoreLabel" [ngClass]="{'bold': match.teamB.goalsCount > match.teamA.goalsCount}">{{ match.teamB.goalsCount }}</span>
           <p class="team-rating">Rating zespołu: <strong>{{ match.teamB.teamRating }}</strong></p>
           <table class="players-table">
             <thead>
