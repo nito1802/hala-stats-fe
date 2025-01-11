@@ -18,7 +18,7 @@
   </ng-container>
   
   <ng-template #hideCounter></ng-template>
-  <div class="result-column-next-match">
+  <div class="result-column-next-match" *ngIf="nextMatch.state === 'Live'">
     <p class="result-next-match">
       <span class="scoreLabel" [ngClass]="{'bold': nextMatch.teamA.goalsCount > nextMatch.teamB.goalsCount}">{{ nextMatch.teamA.goalsCount }}</span>
       <span class="vs">:</span>
