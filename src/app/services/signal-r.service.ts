@@ -49,6 +49,12 @@ export class SignalRService {
       this.matchInProgress$.next(true);
     });
 
+// Obsługa zakończenia meczu
+this.hubConnection.on('MatchEnd', () => {
+  console.log('Match has ended!');
+  this.matchInProgress$.next(false); // Ustaw na false
+});
+
     this.hubConnection.onclose(err => {
       console.error('WebSocket closed', err);
       this.handleReconnect(err);

@@ -55,9 +55,15 @@ export class HomeComponent implements OnInit {
         takeUntil(this.destroy$)
       )
       .subscribe(isInProgress => {
-        if (isInProgress) {
+        //if (isInProgress) 
+          {
           this.http.get<any>(`${BaseUrl}/MatchSchedule/next-match`)
             .subscribe(match => this.nextMatch = match);
+
+            this.http.get<any[]>(`${BaseUrl}/Match/matches-history`)
+            .subscribe(matches => this.matchesHistory = matches);
+
+            console.log('inprogress')
         }
       });
 
