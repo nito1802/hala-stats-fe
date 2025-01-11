@@ -31,13 +31,13 @@
       <!-- Gole drużyny A -->
       <div *ngIf="goal.teamName === nextMatch.teamA.teamName" class="timeline-item-left">
         <span class="timeline-min">{{ getGoalMinute(goal.goalTimespan) }}'</span>
-        <span class="timeline-player">{{ goal.playerId }}</span>
+        <span class="timeline-player">{{ goal.playerId }} <span *ngIf="goal.goalType === 'OwnGoal'">(sam.)</span></span>
       </div>
   
       <!-- Gole drużyny B -->
       <div *ngIf="goal.teamName === nextMatch.teamB.teamName" class="timeline-item-right">
         <span class="timeline-min">{{ getGoalMinute(goal.goalTimespan) }}'</span>
-        <span class="timeline-player">{{ goal.playerId }}</span>
+        <span class="timeline-player">{{ goal.playerId }} <span *ngIf="goal.goalType === 'OwnGoal'">(sam.)</span></span>
       </div>
     </div>
   </div>
