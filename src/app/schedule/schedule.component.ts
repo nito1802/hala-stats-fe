@@ -24,7 +24,7 @@ interface MatchScheduleResponseDto {
   styleUrl: './schedule.component.css'
 })
 export class ScheduleComponent implements OnInit {
-  displayedColumns: string[] = ['index', 'matchDate', 'skarbnik', 'state', 'eventLink'];
+  displayedColumns: string[] = ['index', 'matchDate', 'skarbnik', 'state'];
   matches: MatchScheduleResponseDto[] = [];
   constructor(private http: HttpClient) {}
 

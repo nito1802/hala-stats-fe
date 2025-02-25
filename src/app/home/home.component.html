@@ -5,13 +5,7 @@
 <mat-card class="next-match-card">
   <mat-card-header class="next-match-header">
     <mat-card-title>{{ getFormattedDate(nextMatch.matchDate) }}</mat-card-title>
-    <mat-card-subtitle>Skarbnik: <strong>{{ nextMatch.skarbnikId }}</strong>
-      <mat-card-actions class="next-match-actions">
-        <a *ngIf="nextMatch.eventLink" mat-button color="primary" [href]="nextMatch.eventLink" target="_blank">
-          Link do wydarzenia
-        </a>
-      </mat-card-actions>
-    </mat-card-subtitle>
+    <mat-card-subtitle>Skarbnik: <strong>{{ nextMatch.skarbnikId }}</strong></mat-card-subtitle>
   </mat-card-header>
   <ng-container *ngIf="nextMatch.state === 'Live'; else hideCounter">
     <h2>{{ counter }}</h2>
@@ -53,7 +47,6 @@
               <th>#</th>
               <th>Imię Zawodnika</th>
               <th>Rating</th>
-              <th>Gole</th>
             </tr>
           </thead>
           <tbody>
@@ -61,7 +54,6 @@
               <td>{{ i + 1 }}</td>
               <td>{{ player.id }}</td>
               <td>{{ player.newRating }}</td>
-              <td>{{ player.goals }}</td>
             </tr>
           </tbody>
         </table>
@@ -76,7 +68,6 @@
               <th>#</th>
               <th>Imię Zawodnika</th>
               <th>Rating</th>
-              <th>Gole</th>
             </tr>
           </thead>
           <tbody>
@@ -84,7 +75,6 @@
               <td>{{ i + 1 }}</td>
               <td>{{ player.id }}</td>
               <td>{{ player.newRating }}</td>
-              <td>{{ player.goals }}</td>
             </tr>
           </tbody>
         </table>
@@ -100,7 +90,6 @@
     <mat-card-header class="match-card-header">
       <mat-card-title>{{ getFormattedDate(match.matchDate) }}</mat-card-title>
       <mat-card-subtitle>Skarbnik: <strong>{{ match.skarbnik }}</strong></mat-card-subtitle>
-      <a mat-button color="primary" [href]="match.eventLink" target="_blank">Link do wydarzenia</a>
     </mat-card-header>
 
     <mat-card-content>
@@ -115,7 +104,6 @@
                 <th>#</th>
                 <th>Imię Zawodnika</th>
                 <th>Rating</th>
-                <th>Gole</th>
               </tr>
             </thead>
             <tbody>
@@ -123,7 +111,6 @@
                 <td>{{ i + 1 }}</td>
                 <td>{{ player.id }}</td>
                 <td>{{ player.newRating }} ({{ player.difference > 0 ? '+' : '' }}{{ player.difference }})</td>
-                <td>{{ player.goals }}</td>
               </tr>
             </tbody>
           </table>
@@ -147,7 +134,6 @@
                 <th>#</th>
                 <th>Imię Zawodnika</th>
                 <th>Rating</th>
-                <th>Gole</th>
               </tr>
             </thead>
             <tbody>
@@ -155,7 +141,6 @@
                 <td>{{ i + 1 }}</td>
                 <td>{{ player.id }}</td>
                 <td>{{ player.newRating }} ({{ player.difference > 0 ? '+' : '' }}{{ player.difference }})</td>
-                <td>{{ player.goals }}</td>
               </tr>
             </tbody>
           </table>
