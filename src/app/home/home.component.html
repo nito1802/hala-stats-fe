@@ -117,11 +117,11 @@
         </div>
 
         <div class="result-column">
-          <p class="result">
+          <div class="result">
             <span class="scoreLabel" [ngClass]="{'bold': match.teamA.goalsCount > match.teamB.goalsCount}">{{ match.teamA.goalsCount }}</span>
             <span class="vs">:</span>
             <span class="scoreLabel" [ngClass]="{'bold': match.teamB.goalsCount > match.teamA.goalsCount}">{{ match.teamB.goalsCount }}</span>
-          </p>
+          </div>
         </div>
 
         <div class="team">
