@@ -4,7 +4,7 @@
 
 <mat-card class="next-match-card">
   <mat-card-header class="next-match-header">
-    <mat-card-title>{{ getFormattedDate(nextMatch.matchDate) }}</mat-card-title>
+    <mat-card-title>{{ getFormattedSingleDate(nextMatch.matchDate) }}</mat-card-title>
     <mat-card-subtitle>Skarbnik: <strong>{{ nextMatch.skarbnikId }}</strong></mat-card-subtitle>
   </mat-card-header>
   <ng-container *ngIf="nextMatch.state === 'Live'; else hideCounter">
@@ -88,7 +88,10 @@
   <h2>Rozegrane mecze</h2>
   <mat-card *ngFor="let match of matchesHistory" class="match-item">
     <mat-card-header class="match-card-header">
-      <mat-card-title>{{ getFormattedDate(match.matchDate) }}</mat-card-title>
+      <mat-card-title>
+        <div *ngFor="let line of getFormattedDate(match.matchDate, match.matchEndDate)">{{ line }}</div>
+
+      </mat-card-title>
       <mat-card-subtitle>Skarbnik: <strong>{{ match.skarbnik }}</strong></mat-card-subtitle>
     </mat-card-header>
 

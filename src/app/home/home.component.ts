@@ -80,7 +80,8 @@ export class HomeComponent implements OnInit {
   }
   }
 
-  getFormattedDate(date: string | Date): string {
+
+  getFormattedSingleDate(date: string | Date): string {
     const parsedDate = new Date(date);
   
     // Ustawienia dla dnia tygodnia, dnia, roku i odmiany miesiąca w dopełniaczu
@@ -115,6 +116,46 @@ export class HomeComponent implements OnInit {
   
     // Pożądany format daty
     return `${formattedWeekday}, ${day} ${formattedMonth} ${year} - ${time}`;
+  }
+
+
+  getFormattedDate(matchDate: string | Date, matchEndDate: string | Date): string[] {
+    const startDate = new Date(matchDate);
+    const endDate = new Date(matchEndDate);
+  
+    // Pobranie dnia, roku i formatu miesiąca w dopełniaczu
+    const day = startDate.getDate();
+    const year = startDate.getFullYear();
+  
+    // Mapa odmian miesięcy w dopełniaczu
+    const monthInGenitive: { [key: string]: string } = {
+      'styczeń': 'Stycznia',
+      'luty': 'Lutego',
+      'marzec': 'Marca',
+      'kwiecień': 'Kwietnia',
+      'maj': 'Maja',
+      'czerwiec': 'Czerwca',
+      'lipiec': 'Lipca',
+      'sierpień': 'Sierpnia',
+      'wrzesień': 'Września',
+      'październik': 'Października',
+      'listopad': 'Listopada',
+      'grudzień': 'Grudnia'
+    };
+  
+    // Pobierz miesiąc w mianowniku i przemapuj na dopełniacz
+    const month = startDate.toLocaleDateString('pl-PL', { month: 'long' }).toLowerCase();
+    const formattedMonth = monthInGenitive[month] || month; // Bezpieczne użycie mapy
+  
+    // Formatowanie godzin rozpoczęcia i zakończenia meczu
+    const startTime = startDate.toLocaleTimeString('pl-PL', { hour: '2-digit', minute: '2-digit' });
+    const endTime = endDate.toLocaleTimeString('pl-PL', { hour: '2-digit', minute: '2-digit' });
+  
+    // Obliczenie czasu trwania meczu
+    const durationMinutes = Math.round((endDate.getTime() - startDate.getTime()) / 60000); // Konwersja ms -> min
+  
+    // Formatowanie końcowego wyniku
+    return [`${day} ${formattedMonth} ${year}`, `${startTime} - ${endTime} (${durationMinutes} min)`];
   }
   
   getGoalMinute(goalTimespan: string): number {
