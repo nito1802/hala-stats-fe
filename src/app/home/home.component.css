@@ -4,6 +4,11 @@
   text-align: center;
 }
 
+.light-font {
+  font-weight: 400; /* lub 'light' zależnie od używanej czcionki */
+  font-size: .8em;
+}
+
 .next-match-actions {
   display: flex;
   justify-content: center;

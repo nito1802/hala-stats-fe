@@ -89,7 +89,8 @@
   <mat-card *ngFor="let match of matchesHistory" class="match-item">
     <mat-card-header class="match-card-header">
       <mat-card-title>
-        <div *ngFor="let line of getFormattedDate(match.matchDate, match.matchEndDate)">{{ line }}</div>
+        <div *ngFor="let line of getFormattedDate(match.matchDate, match.matchEndDate); let i = index"
+        [ngClass]="{'light-font': i === 1}">{{ line }}</div>
 
       </mat-card-title>
       <mat-card-subtitle>Skarbnik: <strong>{{ match.skarbnik }}</strong></mat-card-subtitle>
