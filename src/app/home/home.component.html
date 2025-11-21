@@ -84,7 +84,11 @@
           <tbody>
             <tr *ngFor="let player of nextMatch.teamA.players; let i = index">
               <td>{{ i + 1 }}</td>
-              <td>{{ player.id }}</td>
+              <td>
+                <a class="player-link" [routerLink]="['/player', player.id]">
+                  {{ player.displayName }}
+                </a>
+              </td>
               <td>{{ player.newRating }}</td>
             </tr>
           </tbody>
@@ -107,7 +111,11 @@
           <tbody>
             <tr *ngFor="let player of nextMatch.teamB.players; let i = index">
               <td>{{ i + 1 }}</td>
-              <td>{{ player.id }}</td>
+              <td>
+                <a class="player-link" [routerLink]="['/player', player.id]">
+                  {{ player.displayName }}
+                </a>
+              </td>
               <td>{{ player.newRating }}</td>
             </tr>
           </tbody>
@@ -170,7 +178,7 @@
                 <td>{{ i + 1 }}</td>
                 <td>
                   <a class="player-link" [routerLink]="['/player', player.id]">
-                    {{ player.id }}
+                    {{ player.displayName }}
                   </a>
                 </td>
                 <td>
@@ -231,7 +239,11 @@
             <tbody>
               <tr *ngFor="let player of match.teamB.players; let i = index">
                 <td>{{ i + 1 }}</td>
-                <td>{{ player.id }}</td>
+                <td>
+                  <a class="player-link" [routerLink]="['/player', player.id]">
+                    {{ player.displayName }}
+                  </a>
+                </td>
                 <td>
                   {{ player.newRating }} ({{ player.difference > 0 ? "+" : ""
                   }}{{ player.difference }})
