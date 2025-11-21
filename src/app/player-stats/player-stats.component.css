@@ -1,0 +1,96 @@
+.stats-container {
+  max-width: 800px;
+  margin: 30px auto;
+  padding: 20px;
+}
+
+.player-name {
+  text-align: center;
+  font-size: 2em;
+  margin-bottom: 20px;
+  font-weight: bold;
+}
+
+.section-title {
+  margin-top: 20px;
+  margin-bottom: 10px;
+  font-weight: bold;
+  font-size: 1.2em;
+  text-align: center;
+}
+
+/* SERIE */
+.serie-row {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 30px;
+}
+
+.serie-box {
+  width: 32px;
+  height: 32px;
+  font-size: 1em;
+  font-weight: bold;
+  color: #fff;
+  border-radius: 6px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Kolory */
+.win {
+  background-color: #4caf50;
+} /* zielony */
+.loss {
+  background-color: #e53935;
+} /* czerwony */
+.draw {
+  background-color: #fbc02d;
+} /* żółty */
+
+/* STAT BOX GRID */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+}
+
+.stat-box {
+  background: #f7f7f7;
+  border-radius: 10px;
+  padding: 15px;
+  text-align: center;
+  border: 1px solid #ddd;
+}
+
+.stat-title {
+  font-size: 0.9em;
+  color: #666;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+
+.stat-value {
+  font-size: 1.6em;
+  font-weight: bold;
+}
+
+/* MOBILE */
+@media (max-width: 700px) {
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .stat-value {
+    font-size: 1.4em;
+  }
+}
+
+@media (max-width: 450px) {
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+}

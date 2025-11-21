@@ -1,0 +1,56 @@
+<div class="stats-container" *ngIf="stats">
+  <!-- HEADER -->
+  <h2 class="player-name">{{ stats.displayName }}</h2>
+
+  <!-- SERIE -->
+  <div class="section-title">Ostatnie mecze</div>
+
+  <div class="serie-row">
+    <div
+      *ngFor="let letter of stats.serie.split('')"
+      [class]="getSerieClass(letter)"
+    >
+      {{ letter }}
+    </div>
+  </div>
+
+  <!-- STAT BOXES -->
+  <div class="stats-grid">
+    <div class="stat-box">
+      <div class="stat-title">Rozegrane mecze</div>
+      <div class="stat-value">{{ stats.playedMatches }}</div>
+    </div>
+
+    <div class="stat-box">
+      <div class="stat-title">Czas na boisku</div>
+      <div class="stat-value">
+        {{ toMinutesString(stats.totalMinutesPlayed) }}
+      </div>
+    </div>
+
+    <div class="stat-box">
+      <div class="stat-title">Największa wygrana</div>
+      <div class="stat-value">{{ stats.greatestWin }}</div>
+    </div>
+
+    <div class="stat-box">
+      <div class="stat-title">Najwyższa porażka</div>
+      <div class="stat-value">{{ stats.greatestLoss }}</div>
+    </div>
+
+    <div class="stat-box">
+      <div class="stat-title">Gole drużyny</div>
+      <div class="stat-value">{{ stats.teamGoalsScored }}</div>
+    </div>
+
+    <div class="stat-box">
+      <div class="stat-title">Gole stracone</div>
+      <div class="stat-value">{{ stats.teamGoalsConceded }}</div>
+    </div>
+
+    <div class="stat-box">
+      <div class="stat-title">Najczęstszy partner</div>
+      <div class="stat-value">{{ stats.mostLikePlayer || "-" }}</div>
+    </div>
+  </div>
+</div>
