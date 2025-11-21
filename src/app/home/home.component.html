@@ -168,7 +168,11 @@
             <tbody>
               <tr *ngFor="let player of match.teamA.players; let i = index">
                 <td>{{ i + 1 }}</td>
-                <td>{{ player.id }}</td>
+                <td>
+                  <a class="player-link" [routerLink]="['/player', player.id]">
+                    {{ player.id }}
+                  </a>
+                </td>
                 <td>
                   {{ player.newRating }} ({{ player.difference > 0 ? "+" : ""
                   }}{{ player.difference }})

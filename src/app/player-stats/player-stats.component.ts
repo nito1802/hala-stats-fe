@@ -1,7 +1,7 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { BaseUrl } from '../consts/urls';
 
 export interface PlayerStatsResponseDto {
@@ -21,7 +21,7 @@ export interface PlayerStatsResponseDto {
 @Component({
   selector: 'app-player-stats',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, HttpClientModule],
   templateUrl: './player-stats.component.html',
   styleUrls: ['./player-stats.component.css'],
 })
