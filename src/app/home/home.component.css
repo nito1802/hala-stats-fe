@@ -5,6 +5,7 @@
 }
 
 .light-font {
+  margin-top: -4px;
   font-weight: 400; /* lub 'light' zależnie od używanej czcionki */
   font-size: .8em;
 }
