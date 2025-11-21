@@ -4,11 +4,12 @@ import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { BaseUrl } from '../consts/urls';
-
+import { RouterModule } from '@angular/router';
 
 interface PlayerRankResponseDto {
   index: number | null;
   playerName: string;
+  playerId: string;
   eloRating: number;
   gamesCount: number;
 }
@@ -20,20 +21,27 @@ interface PlayerRankResponseDto {
     CommonModule,
     MatTableModule,
     MatButtonModule,
-    HttpClientModule
+    HttpClientModule,
+    RouterModule,
   ],
   templateUrl: './ranking.component.html',
-  styleUrls: ['./ranking.component.css']
+  styleUrls: ['./ranking.component.css'],
 })
 export class RankingComponent implements OnInit {
-  displayedColumns: string[] = ['index', 'playerName', 'eloRating', 'gamesCount'];
+  displayedColumns: string[] = [
+    'index',
+    'playerName',
+    'eloRating',
+    'gamesCount',
+  ];
   players: PlayerRankResponseDto[] = [];
 
   constructor(private http: HttpClient) {}
 
   ngOnInit(): void {
-    this.http.get<PlayerRankResponseDto[]>(`${BaseUrl}/Player/rank`)
-      .subscribe(data => {
+    this.http
+      .get<PlayerRankResponseDto[]>(`${BaseUrl}/Player/rank`)
+      .subscribe((data) => {
         this.players = data;
       });
   }
