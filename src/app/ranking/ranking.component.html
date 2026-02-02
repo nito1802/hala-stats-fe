@@ -1,6 +1,14 @@
 <div class="ranking-container">
   <h2>Ranking Zawodników</h2>
-  <table mat-table [dataSource]="players" class="mat-elevation-z8">
+
+  <!-- AKTUALNY SEZON -->
+  <div class="section-title">Aktualny sezon</div>
+  <table
+    mat-table
+    [dataSource]="currentSeasonPlayers"
+    class="mat-elevation-z8"
+    *ngIf="currentSeasonPlayers.length > 0; else noCurrent"
+  >
     <!-- Index Column -->
     <ng-container matColumnDef="index">
       <th mat-header-cell *matHeaderCellDef>#</th>
@@ -29,7 +37,76 @@
       <td mat-cell *matCellDef="let element">{{ element.gamesCount }}</td>
     </ng-container>
 
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    <tr mat-header-row *matHeaderRowDef="displayedColumnsCurrent"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumnsCurrent"></tr>
   </table>
+
+  <ng-template #noCurrent>
+    <div class="empty-state">Brak zawodników w aktualnym sezonie.</div>
+  </ng-template>
+
+  <!-- POPRZEDNIE SEZONY -->
+  <div class="section-title section-title--spaced">
+    Zawodnicy z poprzednich sezonów
+  </div>
+
+  <table
+    mat-table
+    [dataSource]="previousSeasonPlayers"
+    class="mat-elevation-z8"
+    *ngIf="previousSeasonPlayers.length > 0; else noPrevious"
+  >
+    <!-- Player Name Column -->
+    <ng-container matColumnDef="playerName">
+      <th mat-header-cell *matHeaderCellDef>Imię Zawodnika</th>
+      <td mat-cell *matCellDef="let element">
+        <a class="player-link" [routerLink]="['/player', element.playerId]">
+          {{ element.playerName }}
+        </a>
+      </td>
+    </ng-container>
+
+    <!-- Last Match Date Column -->
+    <ng-container matColumnDef="lastMatchDate">
+      <th mat-header-cell *matHeaderCellDef>Ostatni mecz</th>
+      <td mat-cell *matCellDef="let element">
+        {{ formatDate(element.lastMatchDate) }}
+      </td>
+    </ng-container>
+
+    <!-- Games Count Column -->
+    <ng-container matColumnDef="gamesCount">
+      <th mat-header-cell *matHeaderCellDef>Ilość Występów</th>
+      <td mat-cell *matCellDef="let element">{{ element.gamesCount }}</td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumnsPrevious"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumnsPrevious"></tr>
+  </table>
+
+  <ng-template #noPrevious>
+    <div class="empty-state">Brak zawodników z poprzednich sezonów.</div>
+  </ng-template>
+
+  <!-- ZASADY (małym druczkiem) -->
+  <div class="ranking-rules">
+    <div class="rules-title">ZASADY liczenia rankingu</div>
+    <div class="rules-text">
+      Im większa różnica bramek w meczu, tym większa zmiana ELO (mocniejsze
+      zwycięstwo = większa nagroda / kara). Dla dwóch zawodników z ELO
+      <b>1500</b> wynik wygląda przykładowo tak:
+    </div>
+
+    <ul class="rules-examples">
+      <li>(min. 1 bramka różnicy) → zwycięzca: <b>1525</b> (mnożnik x1)</li>
+      <li>(min. 3 bramki różnicy) → zwycięzca: <b>1537</b> (mnożnik x1,5)</li>
+      <li>(min. 5 bramek różnicy) → zwycięzca: <b>1550</b> (mnożnik x2)</li>
+      <li>(min. 10 bramek różnicy) → zwycięzca: <b>1562</b> (mnożnik x2,5)</li>
+    </ul>
+
+    <div class="rules-footnote">
+      W praktyce: przy małej różnicy bramek zmiana jest mniejsza, a przy
+      wysokiej – większa (z zaokrągleniem do pełnych punktów).
+    </div>
+  </div>
 </div>

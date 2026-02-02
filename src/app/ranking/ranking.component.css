@@ -1,10 +1,54 @@
 .ranking-container {
   width: 80%;
-  margin: 20px auto;
+  margin: 0px auto;
 }
 
 h2 {
   text-align: center;
+}
+
+/* mały druczek / zasady */
+.ranking-rules {
+  margin: 22px auto 22px;
+  padding: 10px 14px;
+  border-radius: 12px;
+  background: rgba(0, 0, 0, 0.03);
+}
+
+.rules-title {
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  font-weight: 700;
+  opacity: 0.7;
+  margin-bottom: 6px;
+}
+
+.rules-text {
+  font-size: 13px;
+  opacity: 0.85;
+  line-height: 1.35;
+}
+
+.rules-examples {
+  margin: 8px 0 6px;
+  padding-left: 18px;
+  font-size: 13px;
+  opacity: 0.9;
+}
+
+.rules-footnote {
+  font-size: 12px;
+  opacity: 0.7;
+}
+
+.section-title {
+  margin: 18px 0 10px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.section-title--spaced {
+  margin-top: 60px;
 }
 
 table {
@@ -16,6 +60,13 @@ table {
   text-align: center;
 }
 
+.empty-state {
+  text-align: center;
+  opacity: 0.7;
+  margin: 12px 0 6px;
+}
+
+/* link do profilu zawodnika */
 .player-link {
   color: #000; /* czarny */
   text-decoration: none;
