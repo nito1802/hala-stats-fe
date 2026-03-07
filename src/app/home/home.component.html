@@ -5,9 +5,10 @@
     <mat-card-title>{{
       getFormattedSingleDate(nextMatch.matchDate)
     }}</mat-card-title>
-    <mat-card-subtitle
+    <!-- <mat-card-subtitle
       >Skarbnik: <strong>{{ nextMatch.skarbnikId }}</strong></mat-card-subtitle
-    >
+    > -->
+    <mat-card-subtitle><strong>Hala Zielonki</strong></mat-card-subtitle>
   </mat-card-header>
   <ng-container *ngIf="nextMatch.state === 'Live'; else hideCounter">
     <h2>{{ counter }}</h2>
@@ -19,7 +20,7 @@
       <span
         class="scoreLabel"
         [ngClass]="{
-          bold: nextMatch.teamA.goalsCount > nextMatch.teamB.goalsCount
+          bold: nextMatch.teamA.goalsCount > nextMatch.teamB.goalsCount,
         }"
         >{{ nextMatch.teamA.goalsCount }}</span
       >
@@ -27,7 +28,7 @@
       <span
         class="scoreLabel"
         [ngClass]="{
-          bold: nextMatch.teamB.goalsCount > nextMatch.teamA.goalsCount
+          bold: nextMatch.teamB.goalsCount > nextMatch.teamA.goalsCount,
         }"
         >{{ nextMatch.teamB.goalsCount }}</span
       >
@@ -140,9 +141,9 @@
           {{ line }}
         </div>
       </mat-card-title>
-      <mat-card-subtitle
+      <!-- <mat-card-subtitle
         >Skarbnik: <strong>{{ match.skarbnik }}</strong></mat-card-subtitle
-      >
+      > -->
     </mat-card-header>
 
     <mat-card-content>
@@ -150,7 +151,7 @@
         <div class="team">
           <h4
             [ngClass]="{
-              bold: match.teamA.goalsCount > match.teamB.goalsCount
+              bold: match.teamA.goalsCount > match.teamB.goalsCount,
             }"
           >
             {{ match.teamA.teamName }}
@@ -158,7 +159,7 @@
           <span
             class="mobile-scoreLabel"
             [ngClass]="{
-              bold: match.teamA.goalsCount > match.teamB.goalsCount
+              bold: match.teamA.goalsCount > match.teamB.goalsCount,
             }"
             >{{ match.teamA.goalsCount }}</span
           >
@@ -195,7 +196,7 @@
             <span
               class="scoreLabel"
               [ngClass]="{
-                bold: match.teamA.goalsCount > match.teamB.goalsCount
+                bold: match.teamA.goalsCount > match.teamB.goalsCount,
               }"
               >{{ match.teamA.goalsCount }}</span
             >
@@ -203,7 +204,7 @@
             <span
               class="scoreLabel"
               [ngClass]="{
-                bold: match.teamB.goalsCount > match.teamA.goalsCount
+                bold: match.teamB.goalsCount > match.teamA.goalsCount,
               }"
               >{{ match.teamB.goalsCount }}</span
             >
@@ -213,7 +214,7 @@
         <div class="team">
           <h4
             [ngClass]="{
-              bold: match.teamB.goalsCount > match.teamA.goalsCount
+              bold: match.teamB.goalsCount > match.teamA.goalsCount,
             }"
           >
             {{ match.teamB.teamName }}
@@ -221,7 +222,7 @@
           <span
             class="mobile-scoreLabel"
             [ngClass]="{
-              bold: match.teamB.goalsCount > match.teamA.goalsCount
+              bold: match.teamB.goalsCount > match.teamA.goalsCount,
             }"
             >{{ match.teamB.goalsCount }}</span
           >
