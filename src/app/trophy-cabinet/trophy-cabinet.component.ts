@@ -37,9 +37,7 @@ export class TrophyCabinetComponent implements OnInit {
     const normalizedSeason = this.normalizePathSegment(seasonName);
     const normalizedAward = this.normalizePathSegment(awardName);
 
-    return encodeURI(
-      `assets/puchary/${normalizedSeason}/${normalizedAward}.png`,
-    );
+    return encodeURI(`puchary/${normalizedSeason}/${normalizedAward}.png`);
   }
 
   private normalizePathSegment(value: string): string {
