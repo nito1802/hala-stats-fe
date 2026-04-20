@@ -67,11 +67,14 @@
 }
 
 .awards-grid {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 18px;
-  margin-bottom: 36px;
+  margin-left: 200px;
+  margin-right: 200px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+
+  gap: 24px; /* odstęp poziomy + pionowy */
+  justify-items: center; /* wycentrowanie w kolumnach */
+  align-items: start;
 }
 
 .award-tile {
@@ -131,11 +134,9 @@
 }
 
 .award-winner {
-  font-size: 1.35rem;
+  font-size: 1.25rem;
   text-align: center;
   line-height: 1.2;
-  text-decoration: underline;
-  text-underline-offset: 5px;
 }
 
 .award-more {
@@ -212,8 +213,7 @@
   }
 
   .awards-grid {
-    flex-direction: column;
-    align-items: center;
+    grid-template-columns: 1fr;
   }
 
   .award-tile {

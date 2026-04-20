@@ -19,13 +19,6 @@
           />
           <div class="award-type">{{ award.name }}</div>
         </div>
-
-        <div class="details-side-text">
-          <p>
-            Podstrona pucharu — tutaj możesz pokazać większy widok nagrody i
-            wygodnie przejść między gablotą a profilem zawodnika.
-          </p>
-        </div>
       </div>
 
       <div class="winner-section">
@@ -46,42 +39,6 @@
 
       <div class="actions-row">
         <a class="back-link" routerLink="/gablota">przejdź do Gabloty ›</a>
-      </div>
-
-      <div class="stats-section">
-        <h2>Statystyki sezonu</h2>
-
-        <div class="stats-grid">
-          <div class="stat-item">
-            <span class="stat-label">Start sezonu</span>
-            <strong>{{ season.stats.startAt | date: "dd.MM.yyyy" }}</strong>
-          </div>
-
-          <div class="stat-item">
-            <span class="stat-label">Koniec sezonu</span>
-            <strong>{{ season.stats.endAt | date: "dd.MM.yyyy" }}</strong>
-          </div>
-
-          <div class="stat-item">
-            <span class="stat-label">Rozegrane mecze</span>
-            <strong>{{ season.stats.matchesCount }}</strong>
-          </div>
-
-          <div class="stat-item">
-            <span class="stat-label">Czas gry</span>
-            <strong>{{ season.stats.timeElapsed }}</strong>
-          </div>
-
-          <div class="stat-item">
-            <span class="stat-label">Strzelone gole</span>
-            <strong>{{ season.stats.goals }}</strong>
-          </div>
-
-          <div class="stat-item wide">
-            <span class="stat-label">Najwyższy wynik</span>
-            <strong>{{ season.stats.highestWin }}</strong>
-          </div>
-        </div>
       </div>
     </div>
   </mat-card>

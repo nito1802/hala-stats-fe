@@ -39,16 +39,18 @@
 }
 
 .details-top {
-  display: grid;
+  display: flex;
   grid-template-columns: minmax(280px, 420px) 1fr;
   gap: 30px;
   align-items: center;
+  justify-content: center;
 }
 
 .trophy-column {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
 }
 
 .trophy-image {
