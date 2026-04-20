@@ -1,0 +1,91 @@
+<section class="cabinet-page">
+  <div class="page-header">
+    <h1>Gablota</h1>
+    <p>Ostatnie sezony i zdobyte nagrody</p>
+  </div>
+
+  <div *ngIf="isLoading" class="state-box">Ładowanie gabloty...</div>
+  <div *ngIf="!isLoading && errorMessage" class="state-box error">
+    {{ errorMessage }}
+  </div>
+
+  <div class="season-list" *ngIf="!isLoading && !errorMessage">
+    <mat-card
+      class="season-card"
+      *ngFor="let season of seasons; trackBy: trackBySeason"
+    >
+      <div class="season-card-inner">
+        <div class="season-header">
+          <h2>{{ season.seasonName }}</h2>
+          <div class="season-subtitle">Nagrody sezonu</div>
+        </div>
+
+        <div class="awards-grid">
+          <a
+            class="award-tile"
+            *ngFor="let award of season.awards; trackBy: trackByAward"
+            [routerLink]="['/gablota', season.seasonIdx, 'puchar', award.id]"
+          >
+            <div class="award-image-wrapper">
+              <img
+                [src]="getAwardImagePath(season.seasonName, award.name)"
+                [alt]="award.name"
+                class="award-image"
+                loading="lazy"
+              />
+            </div>
+
+            <div class="award-label">{{ getAwardShortLabel(award.name) }}</div>
+
+            <div class="award-winner">
+              {{ getMainWinnerDisplay(award) }}
+            </div>
+
+            <div
+              class="award-more"
+              *ngIf="getAdditionalWinnersCount(award) > 0"
+            >
+              +{{ getAdditionalWinnersCount(award) }} więcej
+            </div>
+          </a>
+        </div>
+
+        <div class="season-stats">
+          <h3>Statystyki</h3>
+
+          <div class="stats-grid">
+            <div class="stat-item">
+              <span class="stat-label">Start sezonu</span>
+              <strong>{{ season.stats.startAt | date: "dd.MM.yyyy" }}</strong>
+            </div>
+
+            <div class="stat-item">
+              <span class="stat-label">Koniec sezonu</span>
+              <strong>{{ season.stats.endAt | date: "dd.MM.yyyy" }}</strong>
+            </div>
+
+            <div class="stat-item">
+              <span class="stat-label">Rozegrane mecze</span>
+              <strong>{{ season.stats.matchesCount }}</strong>
+            </div>
+
+            <div class="stat-item">
+              <span class="stat-label">Czas gry</span>
+              <strong>{{ season.stats.timeElapsed }}</strong>
+            </div>
+
+            <div class="stat-item">
+              <span class="stat-label">Strzelone gole</span>
+              <strong>{{ season.stats.goals }}</strong>
+            </div>
+
+            <div class="stat-item wide">
+              <span class="stat-label">Najwyższy wynik</span>
+              <strong>{{ season.stats.highestWin }}</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+    </mat-card>
+  </div>
+</section>

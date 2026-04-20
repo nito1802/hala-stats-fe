@@ -1,0 +1,195 @@
+.award-details-page {
+  padding: 120px 20px 40px;
+  max-width: 1100px;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+.state-box {
+  text-align: center;
+  background: #f3f3f3;
+  padding: 18px;
+  border-radius: 18px;
+  max-width: 500px;
+  margin: 30px auto;
+}
+
+.state-box.error {
+  color: #9f1d1d;
+}
+
+.details-card {
+  background: #ececec;
+  border-radius: 28px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+}
+
+.details-inner {
+  padding: 28px 30px 36px;
+}
+
+.details-header {
+  text-align: center;
+  margin-bottom: 18px;
+}
+
+.details-header h1 {
+  margin: 0;
+  font-size: 2.2rem;
+}
+
+.details-top {
+  display: grid;
+  grid-template-columns: minmax(280px, 420px) 1fr;
+  gap: 30px;
+  align-items: center;
+}
+
+.trophy-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.trophy-image {
+  width: 100%;
+  max-width: 300px;
+  max-height: 380px;
+  object-fit: contain;
+  filter: drop-shadow(0 12px 18px rgba(0, 0, 0, 0.18));
+}
+
+.award-type {
+  margin-top: 10px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  text-align: center;
+}
+
+.details-side-text {
+  color: #b12510;
+  font-weight: 700;
+  font-size: 1.2rem;
+  line-height: 1.35;
+}
+
+.winner-section {
+  margin-top: 18px;
+  text-align: center;
+}
+
+.winner-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+}
+
+.winner-link {
+  color: #000;
+  text-decoration: underline;
+  text-underline-offset: 5px;
+  font-size: 1.1rem;
+}
+
+.awarded-date {
+  margin-top: 14px;
+  color: #666;
+  font-style: italic;
+}
+
+.actions-row {
+  margin-top: 50px;
+  text-align: center;
+}
+
+.back-link {
+  color: #000;
+  text-decoration: none;
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.back-link:hover {
+  opacity: 0.75;
+}
+
+.stats-section {
+  margin-top: 50px;
+}
+
+.stats-section h2 {
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 300;
+  margin-bottom: 24px;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(220px, 1fr));
+  gap: 16px;
+}
+
+.stat-item {
+  background: rgba(255, 255, 255, 0.55);
+  border-radius: 18px;
+  padding: 18px;
+  text-align: center;
+}
+
+.stat-item.wide {
+  grid-column: span 2;
+}
+
+.stat-label {
+  display: block;
+  margin-bottom: 8px;
+  color: #555;
+  font-size: 0.95rem;
+}
+
+.stat-item strong {
+  font-size: 1.3rem;
+}
+
+@media only screen and (max-width: 768px) {
+  .award-details-page {
+    padding: 110px 14px 24px;
+  }
+
+  .details-inner {
+    padding: 20px 16px 24px;
+  }
+
+  .details-header h1 {
+    font-size: 1.8rem;
+  }
+
+  .details-top {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .trophy-image {
+    max-width: 240px;
+    max-height: 320px;
+  }
+
+  .details-side-text {
+    font-size: 1rem;
+    text-align: center;
+  }
+
+  .back-link {
+    font-size: 1.7rem;
+  }
+
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .stat-item.wide {
+    grid-column: span 1;
+  }
+}
