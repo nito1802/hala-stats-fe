@@ -1,5 +1,5 @@
 .cabinet-page {
-  padding: 120px 20px 40px;
+  padding: 0px 20px 40px;
   max-width: 1400px;
   margin: 0 auto;
   box-sizing: border-box;
@@ -197,7 +197,7 @@
 
 @media only screen and (max-width: 768px) {
   .cabinet-page {
-    padding: 110px 14px 24px;
+    padding: 0px 14px 24px;
   }
 
   .season-card-inner {
@@ -214,6 +214,8 @@
 
   .awards-grid {
     grid-template-columns: 1fr;
+    margin-left: 0;
+    margin-right: 0;
   }
 
   .award-tile {
