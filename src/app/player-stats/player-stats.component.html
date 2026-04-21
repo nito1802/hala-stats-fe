@@ -1,8 +1,27 @@
 <div class="stats-container" *ngIf="stats">
-  <!-- HEADER -->
   <h2 class="player-name">{{ stats.displayName }}</h2>
 
-  <!-- SERIE -->
+  <div class="section-title" *ngIf="playerAwards.length > 0">
+    Zdobyte puchary
+  </div>
+
+  <div class="player-awards-strip" *ngIf="playerAwards.length > 0">
+    <a
+      *ngFor="let award of playerAwards; trackBy: trackByAward"
+      class="player-award-link"
+      [routerLink]="['/gablota', award.seasonIdx, 'puchar', award.id]"
+      [matTooltip]="award.tooltip"
+      matTooltipPosition="above"
+    >
+      <img
+        class="player-award-icon"
+        [src]="getAwardImagePath(award)"
+        [alt]="award.name"
+        loading="lazy"
+      />
+    </a>
+  </div>
+
   <div class="section-title">Ostatnie mecze</div>
 
   <div class="serie-row">
@@ -14,7 +33,6 @@
     </div>
   </div>
 
-  <!-- STAT BOXES -->
   <div class="stats-grid">
     <div class="stat-box">
       <div class="stat-title">Rozegrane mecze</div>

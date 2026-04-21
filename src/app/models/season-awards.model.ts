@@ -16,9 +16,15 @@ export interface AwardDto {
   id: number;
   name: string;
   value: string;
+  tooltip: string;
   seasonId: number;
+  seasonName: string;
   createdAt: string;
   players: SeasonAwardPlayerDto[];
+}
+
+export interface PlayerAwardDto extends AwardDto {
+  seasonIdx: number;
 }
 
 export interface SeasonAwardsDto {

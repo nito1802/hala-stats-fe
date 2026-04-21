@@ -1,7 +1,6 @@
 <div class="ranking-container">
   <h2>Ranking Zawodników</h2>
 
-  <!-- AKTUALNY SEZON -->
   <div class="section-title">Aktualny sezon</div>
   <table
     mat-table
@@ -9,29 +8,44 @@
     class="mat-elevation-z8"
     *ngIf="currentSeasonPlayers.length > 0; else noCurrent"
   >
-    <!-- Index Column -->
     <ng-container matColumnDef="index">
       <th mat-header-cell *matHeaderCellDef>#</th>
       <td mat-cell *matCellDef="let element">{{ element.index ?? "" }}</td>
     </ng-container>
 
-    <!-- Player Name Column -->
     <ng-container matColumnDef="playerName">
       <th mat-header-cell *matHeaderCellDef>Imię Zawodnika</th>
-      <td mat-cell *matCellDef="let element">
-        <a class="player-link" [routerLink]="['/player', element.playerId]">
-          {{ element.playerName }}
-        </a>
+      <td mat-cell *matCellDef="let element" class="player-cell">
+        <div class="player-cell-content">
+          <a class="player-link" [routerLink]="['/player', element.playerId]">
+            {{ element.playerName }}
+          </a>
+
+          <div class="player-awards-row" *ngIf="element.awards.length > 0">
+            <a
+              *ngFor="let award of element.awards; trackBy: trackByAward"
+              class="mini-award-link"
+              [routerLink]="['/gablota', award.seasonIdx, 'puchar', award.id]"
+              [matTooltip]="award.tooltip"
+              matTooltipPosition="above"
+            >
+              <img
+                class="mini-award-icon"
+                [src]="getAwardImagePath(award)"
+                [alt]="award.name"
+                loading="lazy"
+              />
+            </a>
+          </div>
+        </div>
       </td>
     </ng-container>
 
-    <!-- Elo Rating Column -->
     <ng-container matColumnDef="eloRating">
       <th mat-header-cell *matHeaderCellDef>Rating ELO</th>
       <td mat-cell *matCellDef="let element">{{ element.eloRating }}</td>
     </ng-container>
 
-    <!-- Games Count Column -->
     <ng-container matColumnDef="gamesCount">
       <th mat-header-cell *matHeaderCellDef>Ilość Występów</th>
       <td mat-cell *matCellDef="let element">{{ element.gamesCount }}</td>
@@ -45,7 +59,6 @@
     <div class="empty-state">Brak zawodników w aktualnym sezonie.</div>
   </ng-template>
 
-  <!-- POPRZEDNIE SEZONY -->
   <div class="section-title section-title--spaced">
     Zawodnicy z poprzednich sezonów
   </div>
@@ -56,17 +69,34 @@
     class="mat-elevation-z8"
     *ngIf="previousSeasonPlayers.length > 0; else noPrevious"
   >
-    <!-- Player Name Column -->
     <ng-container matColumnDef="playerName">
       <th mat-header-cell *matHeaderCellDef>Imię Zawodnika</th>
-      <td mat-cell *matCellDef="let element">
-        <a class="player-link" [routerLink]="['/player', element.playerId]">
-          {{ element.playerName }}
-        </a>
+      <td mat-cell *matCellDef="let element" class="player-cell">
+        <div class="player-cell-content">
+          <a class="player-link" [routerLink]="['/player', element.playerId]">
+            {{ element.playerName }}
+          </a>
+
+          <div class="player-awards-row" *ngIf="element.awards.length > 0">
+            <a
+              *ngFor="let award of element.awards; trackBy: trackByAward"
+              class="mini-award-link"
+              [routerLink]="['/gablota', award.seasonIdx, 'puchar', award.id]"
+              [matTooltip]="award.tooltip"
+              matTooltipPosition="above"
+            >
+              <img
+                class="mini-award-icon"
+                [src]="getAwardImagePath(award)"
+                [alt]="award.name"
+                loading="lazy"
+              />
+            </a>
+          </div>
+        </div>
       </td>
     </ng-container>
 
-    <!-- Last Match Date Column -->
     <ng-container matColumnDef="lastMatchDate">
       <th mat-header-cell *matHeaderCellDef>Ostatni mecz</th>
       <td mat-cell *matCellDef="let element">
@@ -74,7 +104,6 @@
       </td>
     </ng-container>
 
-    <!-- Games Count Column -->
     <ng-container matColumnDef="gamesCount">
       <th mat-header-cell *matHeaderCellDef>Ilość Występów</th>
       <td mat-cell *matCellDef="let element">{{ element.gamesCount }}</td>
@@ -88,7 +117,6 @@
     <div class="empty-state">Brak zawodników z poprzednich sezonów.</div>
   </ng-template>
 
-  <!-- ZASADY (małym druczkiem) -->
   <div class="ranking-rules">
     <div class="rules-title">ZASADY liczenia ratingu</div>
     <div class="rules-text">

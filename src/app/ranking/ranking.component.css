@@ -7,7 +7,6 @@ h2 {
   text-align: center;
 }
 
-/* mały druczek / zasady */
 .ranking-rules {
   margin: 22px auto 22px;
   padding: 10px 14px;
@@ -60,27 +59,73 @@ table {
   text-align: center;
 }
 
+.player-cell {
+  padding-top: 10px !important;
+  padding-bottom: 10px !important;
+}
+
+.player-cell-content {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.player-awards-row {
+  display: flex;
+  background-color: green;
+  flex-wrap: wrap;
+  justify-content: left;
+  gap: 4px;
+  max-width: 180px;
+}
+
+.mini-award-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 0;
+  border-radius: 8px;
+  transition:
+    transform 0.18s ease,
+    opacity 0.18s ease;
+}
+
+.mini-award-link:hover {
+  transform: translateY(-1px) scale(1.16);
+}
+
+.mini-award-link:active {
+  transform: scale(0.95);
+  opacity: 0.7;
+}
+
+.mini-award-icon {
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.18));
+}
+
 .empty-state {
   text-align: center;
   opacity: 0.7;
   margin: 12px 0 6px;
 }
 
-/* link do profilu zawodnika */
 .player-link {
-  color: #000; /* czarny */
+  color: #000;
   text-decoration: none;
   font-weight: 500;
   position: relative;
   cursor: pointer;
 }
 
-/* Podkreślenie trochę niżej */
 .player-link::after {
   content: "";
   position: absolute;
   left: 0;
-  bottom: -3px; /* obniżamy linię */
+  bottom: -3px;
   width: 100%;
   height: 2px;
   background-color: #000;
@@ -88,7 +133,6 @@ table {
   transition: 0.2s ease;
 }
 
-/* Hover – pogrubienie i linia grubsza */
 .player-link:hover {
   font-weight: 600;
 }
@@ -98,8 +142,23 @@ table {
   opacity: 0.6;
 }
 
-/* Efekt kliknięcia */
 .player-link:active {
   opacity: 0.6;
   transform: scale(0.97);
+}
+
+@media only screen and (max-width: 768px) {
+  .ranking-container {
+    width: 96%;
+  }
+
+  .player-awards-row {
+    max-width: 120px;
+    gap: 3px;
+  }
+
+  .mini-award-icon {
+    width: 16px;
+    height: 16px;
+  }
 }
