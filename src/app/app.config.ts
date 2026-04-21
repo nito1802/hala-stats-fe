@@ -4,7 +4,7 @@ import {
   LOCALE_ID,
   provideZoneChangeDetection,
 } from '@angular/core';
-import { provideRouter } from '@angular/router';
+import { provideRouter, withInMemoryScrolling } from '@angular/router';
 import { provideClientHydration } from '@angular/platform-browser';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
@@ -18,7 +18,6 @@ import {
 } from '@nito1802/my-shared';
 import { BaseUrl } from './consts/urls';
 
-// ✅ Factory z DI przez deps (bez inject())
 export function startTelemetryFactory(
   ux: UxTelemetryService,
   route: RouteTelemetryService,
@@ -34,7 +33,13 @@ export function startTelemetryFactory(
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
-    provideRouter(routes),
+    provideRouter(
+      routes,
+      withInMemoryScrolling({
+        scrollPositionRestoration: 'enabled',
+        anchorScrolling: 'enabled',
+      }),
+    ),
     provideClientHydration(),
     provideAnimationsAsync(),
 

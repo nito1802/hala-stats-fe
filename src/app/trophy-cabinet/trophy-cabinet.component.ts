@@ -67,17 +67,4 @@ export class TrophyCabinetComponent implements OnInit {
 
     return award.players.length - 1;
   }
-
-  getAwardShortLabel(name: string): string {
-    const lower = name.toLowerCase();
-
-    if (lower.includes('złoto')) return 'złoto';
-    if (lower.includes('srebro')) return 'srebro';
-    if (lower.includes('brąz')) return 'brąz';
-    if (lower.includes('frekwencja')) return 'frekwencja';
-    if (lower.includes('losu')) return 'nagroda losu';
-    if (lower.includes('seria')) return 'seria zwycięstw';
-
-    return name;
-  }
 }
