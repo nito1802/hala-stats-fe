@@ -1,5 +1,6 @@
 <section class="award-details-page">
   <div *ngIf="isLoading" class="state-box">Ładowanie pucharu...</div>
+
   <div *ngIf="!isLoading && errorMessage" class="state-box error">
     {{ errorMessage }}
   </div>
@@ -17,7 +18,14 @@
             [alt]="award.name"
             class="trophy-image"
           />
-          <div class="award-type">{{ award.name }}</div>
+
+          <div class="award-type">
+            <div class="award-name">{{ award.name }}</div>
+
+            <div class="award-value" *ngIf="award.value">
+              {{ award.value }}
+            </div>
+          </div>
         </div>
       </div>
 
@@ -38,7 +46,7 @@
       </div>
 
       <div class="actions-row">
-        <a class="back-link" routerLink="/gablota">Przejdź do Gabloty ›</a>
+        <a class="back-link" routerLink="/gablota"> Przejdź do Gabloty › </a>
       </div>
     </div>
   </mat-card>

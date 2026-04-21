@@ -15,6 +15,7 @@ export interface SeasonStatsDto {
 export interface AwardDto {
   id: number;
   name: string;
+  value: string;
   seasonId: number;
   createdAt: string;
   players: SeasonAwardPlayerDto[];

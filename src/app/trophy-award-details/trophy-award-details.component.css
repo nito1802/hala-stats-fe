@@ -40,7 +40,6 @@
 
 .details-top {
   display: flex;
-  grid-template-columns: minmax(280px, 420px) 1fr;
   gap: 30px;
   align-items: center;
   justify-content: center;
@@ -61,12 +60,34 @@
   filter: drop-shadow(0 12px 18px rgba(0, 0, 0, 0.18));
 }
 
+/* --- NOWA SEKCJA NAZWY + VALUE --- */
+
 .award-type {
-  margin-top: 10px;
-  font-size: 0.95rem;
-  font-weight: 700;
+  margin-top: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
   text-align: center;
 }
+
+.award-name {
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.award-value {
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #444;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
+}
+
+/* --- RESZTA --- */
 
 .details-side-text {
   color: #b12510;
@@ -76,7 +97,7 @@
 }
 
 .winner-section {
-  margin-top: 18px;
+  margin-top: 20px;
   text-align: center;
 }
 
@@ -156,6 +177,8 @@
   font-size: 1.3rem;
 }
 
+/* --- MOBILE --- */
+
 @media only screen and (max-width: 768px) {
   .award-details-page {
     padding: 0px 14px 24px;
@@ -170,7 +193,6 @@
   }
 
   .details-top {
-    grid-template-columns: 1fr;
     gap: 18px;
   }
 
