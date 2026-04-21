@@ -67,15 +67,16 @@ table {
 .player-cell-content {
   display: inline-flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   gap: 6px;
+  text-align: left;
 }
 
 .player-awards-row {
+  margin-top: 4px;
   display: flex;
-  background-color: green;
   flex-wrap: wrap;
-  justify-content: left;
+  justify-content: flex-start;
   gap: 4px;
   max-width: 180px;
 }
@@ -154,7 +155,7 @@ table {
 
   .player-awards-row {
     max-width: 120px;
-    gap: 3px;
+    gap: 5px;
   }
 
   .mini-award-icon {

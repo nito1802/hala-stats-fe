@@ -23,7 +23,7 @@
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 10px;
   margin-bottom: 26px;
 }
 
@@ -31,31 +31,26 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 38px;
-  height: 38px;
-  border-radius: 10px;
-  background: rgba(0, 0, 0, 0.025);
+  line-height: 0;
+  text-decoration: none;
   transition:
     transform 0.2s ease,
-    background 0.2s ease,
-    box-shadow 0.2s ease;
+    opacity 0.2s ease;
 }
 
 .player-award-link:hover {
   transform: translateY(-2px) scale(1.08);
-  background: rgba(0, 0, 0, 0.05);
-  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.1);
 }
 
 .player-award-link:active {
   transform: scale(0.95);
+  opacity: 0.75;
 }
 
 .player-award-icon {
-  width: 26px;
-  height: 26px;
+  width: 30px;
+  height: 30px;
   object-fit: contain;
-  filter: drop-shadow(0 3px 5px rgba(0, 0, 0, 0.18));
 }
 
 .serie-row {
@@ -125,14 +120,13 @@
     font-size: 1.4em;
   }
 
-  .player-award-link {
-    width: 34px;
-    height: 34px;
+  .player-awards-strip {
+    gap: 8px;
   }
 
   .player-award-icon {
-    width: 23px;
-    height: 23px;
+    width: 26px;
+    height: 26px;
   }
 }
 

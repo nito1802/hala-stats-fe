@@ -128,18 +128,7 @@ export class RankingComponent implements OnInit {
     }
 
     for (const [key, playerAwards] of result.entries()) {
-      result.set(
-        key,
-        [...playerAwards].sort((a, b) => {
-          if (b.seasonIdx !== a.seasonIdx) {
-            return b.seasonIdx - a.seasonIdx;
-          }
-
-          return (
-            new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-          );
-        }),
-      );
+      result.set(key, [...playerAwards]);
     }
 
     return result;

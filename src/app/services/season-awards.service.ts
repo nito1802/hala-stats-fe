@@ -18,27 +18,19 @@ export class SeasonAwardsService {
     return this.http.get<SeasonAwardsDto[]>(`${BaseUrl}/Stats/season-awards`);
   }
 
-  getAllAwardsFlat(): Observable<PlayerAwardDto[]> {
-    return this.getSeasonAwards().pipe(
-      map((seasons) =>
-        (seasons ?? [])
-          .flatMap((season) =>
-            (season.awards ?? []).map(
-              (award): PlayerAwardDto => ({
-                ...award,
-                seasonIdx: season.seasonIdx,
-              }),
-            ),
-          )
-          .sort((a, b) => {
-            if (b.seasonIdx !== a.seasonIdx) {
-              return b.seasonIdx - a.seasonIdx;
-            }
+  getAllAwards(): Observable<AwardDto[]> {
+    return this.http.get<AwardDto[]>(`${BaseUrl}/Stats/awards`);
+  }
 
-            return (
-              new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-            );
+  getAllAwardsFlat(): Observable<PlayerAwardDto[]> {
+    return this.getAllAwards().pipe(
+      map((awards) =>
+        (awards ?? []).map(
+          (award): PlayerAwardDto => ({
+            ...award,
+            seasonIdx: award.seasonId,
           }),
+        ),
       ),
     );
   }
