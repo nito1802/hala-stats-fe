@@ -17,6 +17,7 @@ import {
   FocusTelemetryService,
 } from '@nito1802/my-shared';
 import { BaseUrl } from './consts/urls';
+import { provideHttpClient } from '@angular/common/http';
 
 export function startTelemetryFactory(
   ux: UxTelemetryService,
@@ -40,6 +41,7 @@ export const appConfig: ApplicationConfig = {
         anchorScrolling: 'enabled',
       }),
     ),
+    provideHttpClient(),
     provideClientHydration(),
     provideAnimationsAsync(),
 
