@@ -23,11 +23,10 @@ export interface PlayerStatsResponseDto {
 }
 
 @Component({
-  selector: 'app-player-stats',
-  standalone: true,
-  imports: [CommonModule, HttpClientModule, RouterModule, MatTooltipModule],
-  templateUrl: './player-stats.component.html',
-  styleUrls: ['./player-stats.component.css'],
+    selector: 'app-player-stats',
+    imports: [CommonModule, HttpClientModule, RouterModule, MatTooltipModule],
+    templateUrl: './player-stats.component.html',
+    styleUrls: ['./player-stats.component.css']
 })
 export class PlayerStatsComponent implements OnInit {
   private route = inject(ActivatedRoute);

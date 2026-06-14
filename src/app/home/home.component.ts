@@ -12,17 +12,16 @@ import { PLATFORM_ID, Inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
 @Component({
-  selector: 'app-home',
-  standalone: true,
-  imports: [
-    CommonModule,
-    HttpClientModule,
-    MatButtonModule,
-    MatCardModule,
-    RouterModule,
-  ], // Dodaj HttpClientModule do importów
-  templateUrl: './home.component.html',
-  styleUrl: './home.component.css',
+    selector: 'app-home',
+    imports: [
+        CommonModule,
+        HttpClientModule,
+        MatButtonModule,
+        MatCardModule,
+        RouterModule,
+    ], // Dodaj HttpClientModule do importów
+    templateUrl: './home.component.html',
+    styleUrl: './home.component.css'
 })
 export class HomeComponent implements OnInit {
   nextMatch: any;

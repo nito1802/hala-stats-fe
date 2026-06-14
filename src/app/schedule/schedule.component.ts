@@ -13,15 +13,14 @@ interface MatchScheduleResponseDto {
 }
 
 @Component({
-  selector: 'app-schedule',
-  standalone: true,
-  imports: [
-    CommonModule, // Wymagane dla dyrektyw Angulara, np. *ngIf, *ngFor
-    MatTableModule, // Importuj MatTableModule bezpośrednio do komponentu
-    MatButtonModule, // Importuj MatButtonModule bezpośrednio do komponentu
-    HttpClientModule
-  ],  templateUrl: './schedule.component.html',
-  styleUrl: './schedule.component.css'
+    selector: 'app-schedule',
+    imports: [
+        CommonModule, // Wymagane dla dyrektyw Angulara, np. *ngIf, *ngFor
+        MatTableModule, // Importuj MatTableModule bezpośrednio do komponentu
+        MatButtonModule, // Importuj MatButtonModule bezpośrednio do komponentu
+        HttpClientModule
+    ], templateUrl: './schedule.component.html',
+    styleUrl: './schedule.component.css'
 })
 export class ScheduleComponent implements OnInit {
   displayedColumns: string[] = ['index', 'matchDate', 'skarbnik', 'state'];

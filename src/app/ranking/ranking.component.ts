@@ -24,18 +24,17 @@ interface PlayerRankWithAwardsDto extends PlayerRankResponseDto {
 }
 
 @Component({
-  selector: 'app-ranking',
-  standalone: true,
-  imports: [
-    CommonModule,
-    MatTableModule,
-    MatButtonModule,
-    MatTooltipModule,
-    HttpClientModule,
-    RouterModule,
-  ],
-  templateUrl: './ranking.component.html',
-  styleUrls: ['./ranking.component.css'],
+    selector: 'app-ranking',
+    imports: [
+        CommonModule,
+        MatTableModule,
+        MatButtonModule,
+        MatTooltipModule,
+        HttpClientModule,
+        RouterModule,
+    ],
+    templateUrl: './ranking.component.html',
+    styleUrls: ['./ranking.component.css']
 })
 export class RankingComponent implements OnInit {
   displayedColumnsCurrent: string[] = [

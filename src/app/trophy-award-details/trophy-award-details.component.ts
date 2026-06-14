@@ -7,11 +7,10 @@ import { SeasonAwardsService } from '../services/season-awards.service';
 import { AwardDto, SeasonAwardsDto } from '../models/season-awards.model';
 
 @Component({
-  selector: 'app-trophy-award-details',
-  standalone: true,
-  imports: [CommonModule, RouterModule, HttpClientModule, MatCardModule],
-  templateUrl: './trophy-award-details.component.html',
-  styleUrl: './trophy-award-details.component.css',
+    selector: 'app-trophy-award-details',
+    imports: [CommonModule, RouterModule, HttpClientModule, MatCardModule],
+    templateUrl: './trophy-award-details.component.html',
+    styleUrl: './trophy-award-details.component.css'
 })
 export class TrophyAwardDetailsComponent implements OnInit {
   season?: SeasonAwardsDto;

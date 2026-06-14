@@ -7,11 +7,10 @@ import { SeasonAwardsDto, AwardDto } from '../models/season-awards.model';
 import { SeasonAwardsService } from '../services/season-awards.service';
 
 @Component({
-  selector: 'app-trophy-cabinet',
-  standalone: true,
-  imports: [CommonModule, HttpClientModule, RouterModule, MatCardModule],
-  templateUrl: './trophy-cabinet.component.html',
-  styleUrl: './trophy-cabinet.component.css',
+    selector: 'app-trophy-cabinet',
+    imports: [CommonModule, HttpClientModule, RouterModule, MatCardModule],
+    templateUrl: './trophy-cabinet.component.html',
+    styleUrl: './trophy-cabinet.component.css'
 })
 export class TrophyCabinetComponent implements OnInit {
   seasons: SeasonAwardsDto[] = [];
