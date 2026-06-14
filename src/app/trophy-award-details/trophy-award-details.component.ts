@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { MatCardModule } from '@angular/material/card';
@@ -8,7 +8,7 @@ import { AwardDto, SeasonAwardsDto } from '../models/season-awards.model';
 
 @Component({
     selector: 'app-trophy-award-details',
-    imports: [CommonModule, RouterModule, HttpClientModule, MatCardModule],
+    imports: [RouterModule, HttpClientModule, MatCardModule],
     templateUrl: './trophy-award-details.component.html',
     styleUrl: './trophy-award-details.component.css'
 })

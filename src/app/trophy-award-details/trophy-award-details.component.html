@@ -1,49 +1,53 @@
 <section class="award-details-page">
-  <div *ngIf="isLoading" class="state-box">Ładowanie pucharu...</div>
+  @if (isLoading) {
+    <div class="state-box">Ładowanie pucharu...</div>
+  }
 
-  <div *ngIf="!isLoading && errorMessage" class="state-box error">
-    {{ errorMessage }}
-  </div>
+  @if (!isLoading && errorMessage) {
+    <div class="state-box error">
+      {{ errorMessage }}
+    </div>
+  }
 
-  <mat-card class="details-card" *ngIf="!isLoading && season && award">
-    <div class="details-inner">
-      <div class="details-top">
-        <div class="trophy-column">
-          <img
-            [src]="getAwardImagePath()"
-            [alt]="award.slug"
-            class="trophy-image"
-          />
-
-          <div class="award-type">
-            <div class="award-name">{{ award.name }}</div>
-
-            <div class="award-value" *ngIf="award.value">
-              {{ award.value }}
+  @if (!isLoading && season && award) {
+    <mat-card class="details-card">
+      <div class="details-inner">
+        <div class="details-top">
+          <div class="trophy-column">
+            <img
+              [src]="getAwardImagePath()"
+              [alt]="award.slug"
+              class="trophy-image"
+              />
+              <div class="award-type">
+                <div class="award-name">{{ award.name }}</div>
+                @if (award.value) {
+                  <div class="award-value">
+                    {{ award.value }}
+                  </div>
+                }
+              </div>
             </div>
           </div>
+          <div class="winner-section">
+            <div class="winner-list">
+              @for (player of award.players; track player) {
+                <a
+                  class="player-link"
+                  [routerLink]="['/player', player.id]"
+                  >
+                  {{ player.displayName }}
+                </a>
+              }
+            </div>
+            <div class="awarded-date">
+              Nagroda przyznana {{ getCreatedAtText(award.createdAt) }}
+            </div>
+          </div>
+          <div class="actions-row">
+            <a class="back-link" routerLink="/gablota"> Przejdź do Gabloty › </a>
+          </div>
         </div>
-      </div>
-
-      <div class="winner-section">
-        <div class="winner-list">
-          <a
-            *ngFor="let player of award.players"
-            class="player-link"
-            [routerLink]="['/player', player.id]"
-          >
-            {{ player.displayName }}
-          </a>
-        </div>
-
-        <div class="awarded-date">
-          Nagroda przyznana {{ getCreatedAtText(award.createdAt) }}
-        </div>
-      </div>
-
-      <div class="actions-row">
-        <a class="back-link" routerLink="/gablota"> Przejdź do Gabloty › </a>
-      </div>
-    </div>
-  </mat-card>
-</section>
+      </mat-card>
+    }
+  </section>

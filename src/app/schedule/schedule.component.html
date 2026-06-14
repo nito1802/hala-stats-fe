@@ -19,12 +19,11 @@
     <ng-container matColumnDef="skarbnik">
       <th mat-header-cell *matHeaderCellDef>Skarbnik</th>
       <td mat-cell *matCellDef="let element">
-        <ng-container *ngIf="element.state === 'Cancelled'; else skarbnikName">
+        @if (element.state === 'Cancelled') {
           -
-        </ng-container>
-        <ng-template #skarbnikName>
+        } @else {
           {{ element.skarbnikId }}
-        </ng-template>
+        }
       </td>
     </ng-container>
 

@@ -1,5 +1,5 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { MatTooltipModule } from '@angular/material/tooltip';
@@ -24,7 +24,7 @@ export interface PlayerStatsResponseDto {
 
 @Component({
     selector: 'app-player-stats',
-    imports: [CommonModule, HttpClientModule, RouterModule, MatTooltipModule],
+    imports: [HttpClientModule, RouterModule, MatTooltipModule],
     templateUrl: './player-stats.component.html',
     styleUrls: ['./player-stats.component.css']
 })

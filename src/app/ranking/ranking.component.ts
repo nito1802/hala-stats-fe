@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { CommonModule } from '@angular/common';
+
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { BaseUrl } from '../consts/urls';
 import { RouterModule } from '@angular/router';
@@ -26,13 +26,12 @@ interface PlayerRankWithAwardsDto extends PlayerRankResponseDto {
 @Component({
     selector: 'app-ranking',
     imports: [
-        CommonModule,
-        MatTableModule,
-        MatButtonModule,
-        MatTooltipModule,
-        HttpClientModule,
-        RouterModule,
-    ],
+    MatTableModule,
+    MatButtonModule,
+    MatTooltipModule,
+    HttpClientModule,
+    RouterModule
+],
     templateUrl: './ranking.component.html',
     styleUrls: ['./ranking.component.css']
 })
