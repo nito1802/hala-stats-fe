@@ -1,15 +1,20 @@
-import { Component, Inject, PLATFORM_ID, ChangeDetectionStrategy } from '@angular/core';
+import {
+  Component,
+  Inject,
+  PLATFORM_ID,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { MenuComponent } from './menu/menu.component';
 
 @Component({
-    selector: 'app-root',
-    imports: [RouterOutlet, MenuComponent],
-    templateUrl: './app.component.html',
-    changeDetection: ChangeDetectionStrategy.Eager,
-    styleUrl: './app.component.css'
+  selector: 'app-root',
+  imports: [RouterOutlet, MenuComponent],
+  templateUrl: './app.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
+  styleUrl: './app.component.css',
 })
 export class AppComponent {
   title = 'hala-stats-fe';
@@ -23,21 +28,9 @@ export class AppComponent {
         window.history.scrollRestoration = 'manual';
       }
 
-      this.router.events
-        .pipe(filter((event) => event instanceof NavigationEnd))
-        .subscribe(() => {
-          requestAnimationFrame(() => {
-            window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
-            document.documentElement.scrollTop = 0;
-            document.body.scrollTop = 0;
-          });
-
-          setTimeout(() => {
-            window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
-            document.documentElement.scrollTop = 0;
-            document.body.scrollTop = 0;
-          }, 0);
-        });
+      this.router.events.pipe(
+        filter((event) => event instanceof NavigationEnd),
+      );
     }
   }
 }
