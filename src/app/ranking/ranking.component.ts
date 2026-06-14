@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
@@ -33,6 +33,7 @@ interface PlayerRankWithAwardsDto extends PlayerRankResponseDto {
     RouterModule
 ],
     templateUrl: './ranking.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
     styleUrls: ['./ranking.component.css']
 })
 export class RankingComponent implements OnInit {

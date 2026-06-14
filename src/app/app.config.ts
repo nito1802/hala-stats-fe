@@ -5,7 +5,7 @@ import {
   provideZoneChangeDetection,
 } from '@angular/core';
 import { provideRouter, withInMemoryScrolling } from '@angular/router';
-import { provideClientHydration } from '@angular/platform-browser';
+import { provideClientHydration, withNoIncrementalHydration } from '@angular/platform-browser';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 import { routes } from './app.routes';
@@ -17,7 +17,7 @@ import {
   FocusTelemetryService,
 } from '@nito1802/my-shared';
 import { BaseUrl } from './consts/urls';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withXhr } from '@angular/common/http';
 
 export function startTelemetryFactory(
   ux: UxTelemetryService,
@@ -41,8 +41,8 @@ export const appConfig: ApplicationConfig = {
         anchorScrolling: 'enabled',
       }),
     ),
-    provideHttpClient(),
-    provideClientHydration(),
+    provideHttpClient(withXhr()),
+    provideClientHydration(withNoIncrementalHydration()),
     provideAnimationsAsync(),
 
     { provide: LOCALE_ID, useValue: 'pl' },

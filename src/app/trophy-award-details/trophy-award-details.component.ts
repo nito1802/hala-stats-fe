@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
@@ -10,6 +10,7 @@ import { AwardDto, SeasonAwardsDto } from '../models/season-awards.model';
     selector: 'app-trophy-award-details',
     imports: [RouterModule, HttpClientModule, MatCardModule],
     templateUrl: './trophy-award-details.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
     styleUrl: './trophy-award-details.component.css'
 })
 export class TrophyAwardDetailsComponent implements OnInit {

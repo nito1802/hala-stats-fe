@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
@@ -20,6 +20,7 @@ interface MatchScheduleResponseDto {
         MatButtonModule, // Importuj MatButtonModule bezpośrednio do komponentu
         HttpClientModule
     ], templateUrl: './schedule.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
     styleUrl: './schedule.component.css'
 })
 export class ScheduleComponent implements OnInit {

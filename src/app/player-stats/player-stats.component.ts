@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, ChangeDetectionStrategy } from '@angular/core';
 
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
@@ -26,6 +26,7 @@ export interface PlayerStatsResponseDto {
     selector: 'app-player-stats',
     imports: [HttpClientModule, RouterModule, MatTooltipModule],
     templateUrl: './player-stats.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
     styleUrls: ['./player-stats.component.css']
 })
 export class PlayerStatsComponent implements OnInit {
