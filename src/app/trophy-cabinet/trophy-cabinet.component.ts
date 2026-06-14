@@ -1,36 +1,51 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
+import { Subject, takeUntil } from 'rxjs';
+
 import { SeasonAwardsDto, AwardDto } from '../models/season-awards.model';
-import { SeasonAwardsService } from '../services/season-awards.service';
+import { TrophyCabinetService } from './trophy-cabinet.service';
 
 @Component({
-    selector: 'app-trophy-cabinet',
-    imports: [CommonModule, HttpClientModule, RouterModule, MatCardModule],
-    templateUrl: './trophy-cabinet.component.html',
-    changeDetection: ChangeDetectionStrategy.Eager,
-    styleUrl: './trophy-cabinet.component.css'
+  selector: 'app-trophy-cabinet',
+  imports: [CommonModule, RouterModule, MatCardModule],
+  templateUrl: './trophy-cabinet.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
+  styleUrl: './trophy-cabinet.component.css',
 })
-export class TrophyCabinetComponent implements OnInit {
+export class TrophyCabinetComponent implements OnInit, OnDestroy {
   seasons: SeasonAwardsDto[] = [];
   isLoading = true;
   errorMessage = '';
 
-  constructor(private seasonAwardsService: SeasonAwardsService) {}
+  private destroy$ = new Subject<void>();
+
+  constructor(private trophyCabinetService: TrophyCabinetService) {}
 
   ngOnInit(): void {
-    this.seasonAwardsService.getSeasonAwards().subscribe({
-      next: (data) => {
-        this.seasons = [...data].sort((a, b) => b.seasonIdx - a.seasonIdx);
-        this.isLoading = false;
-      },
-      error: () => {
-        this.errorMessage = 'Nie udało się pobrać danych gabloty.';
-        this.isLoading = false;
-      },
-    });
+    this.trophyCabinetService.seasons$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: (seasons) => {
+          this.seasons = seasons;
+          this.isLoading = false;
+        },
+        error: () => {
+          this.errorMessage = 'Nie udało się pobrać danych gabloty.';
+          this.isLoading = false;
+        },
+      });
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   getAwardImagePath(seasonName: string, awardName: string): string {
