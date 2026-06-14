@@ -1,7 +1,11 @@
 FROM node:22-alpine AS build
 WORKDIR /app
 
+ARG NPM_TOKEN
+
 COPY package*.json ./
+COPY .npmrc ./
+
 RUN npm ci --legacy-peer-deps
 
 COPY . .
