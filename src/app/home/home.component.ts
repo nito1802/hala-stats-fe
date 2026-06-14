@@ -1,84 +1,81 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { HttpClientModule, HttpClient } from '@angular/common/http';
-import { MatButtonModule } from '@angular/material/button'; // Dodaj import MatButtonModule
-import { MatCardModule } from '@angular/material/card'; // Import MatCardModule
-import { BaseUrl } from '../consts/urls'; // Wychodzimy z katalogu 'home' i wchodzimy do 'consts'
-import { SignalRService } from '../services/signal-r.service';
-import { Subject } from 'rxjs';
-import { takeUntil, distinctUntilChanged } from 'rxjs/operators';
-import { isPlatformBrowser } from '@angular/common';
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+  ChangeDetectionStrategy,
+} from '@angular/core';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { PLATFORM_ID, Inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+
+import { Subject } from 'rxjs';
+import { distinctUntilChanged, takeUntil } from 'rxjs/operators';
+
+import { SignalRService } from '../services/signal-r.service';
+import { HomeService } from './home.service';
+
 @Component({
-    selector: 'app-home',
-    imports: [
-        CommonModule,
-        HttpClientModule,
-        MatButtonModule,
-        MatCardModule,
-        RouterModule,
-    ], // Dodaj HttpClientModule do importów
-    templateUrl: './home.component.html',
-    changeDetection: ChangeDetectionStrategy.Eager,
-    styleUrl: './home.component.css'
+  selector: 'app-home',
+  imports: [CommonModule, MatButtonModule, MatCardModule, RouterModule],
+  templateUrl: './home.component.html',
+  styleUrl: './home.component.css',
+  changeDetection: ChangeDetectionStrategy.Eager,
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, OnDestroy {
   nextMatch: any;
   matchesHistory: any[] = [];
   counter: number = 0;
   score: number | null = null;
   matchInProgress: boolean = false;
+
   private destroy$ = new Subject<void>();
 
   constructor(
-    private http: HttpClient,
+    private homeService: HomeService,
     private signalRService: SignalRService,
-    @Inject(PLATFORM_ID) private platformId: any
+    @Inject(PLATFORM_ID) private platformId: any,
   ) {}
 
-  ngOnInit() {
-    this.http
-      .get<any>(`${BaseUrl}/MatchSchedule/next-match`)
-      .subscribe((match) => {
-        this.nextMatch = match;
+  ngOnInit(): void {
+    this.homeService.homeData$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(({ nextMatch, matchesHistory }) => {
+        this.nextMatch = nextMatch;
+        this.matchesHistory = matchesHistory;
       });
 
-    this.http
-      .get<any[]>(`${BaseUrl}/Match/matches-history`)
-      .subscribe((matches) => (this.matchesHistory = matches));
-
-    // Uruchom SignalR tylko po stronie przeglądarki
     if (isPlatformBrowser(this.platformId)) {
       this.signalRService.startConnection();
 
-      this.signalRService.counter$.subscribe((value) => {
-        this.counter = value;
-      });
+      this.signalRService.counter$
+        .pipe(takeUntil(this.destroy$))
+        .subscribe((value) => {
+          this.counter = value;
+        });
 
-      this.signalRService.score$.subscribe((value) => {
-        this.score = value;
-      });
+      this.signalRService.score$
+        .pipe(takeUntil(this.destroy$))
+        .subscribe((value) => {
+          this.score = value;
+        });
 
       this.signalRService.matchInProgress$
         .pipe(distinctUntilChanged(), takeUntil(this.destroy$))
         .subscribe((isInProgress) => {
-          //if (isInProgress)
-          {
-            this.http
-              .get<any>(`${BaseUrl}/MatchSchedule/next-match`)
-              .subscribe((match) => (this.nextMatch = match));
+          this.homeService.getNextMatch().subscribe((match) => {
+            this.nextMatch = match;
+          });
 
-            this.http
-              .get<any[]>(`${BaseUrl}/Match/matches-history`)
-              .subscribe((matches) => (this.matchesHistory = matches));
+          this.homeService.getMatchesHistory().subscribe((matches) => {
+            this.matchesHistory = matches;
+          });
 
-            console.log('inprogress');
-          }
+          console.log('inprogress', isInProgress);
         });
 
-      // Subskrypcja aktualizacji wyniku
       this.signalRService.scoreUpdate$
         .pipe(takeUntil(this.destroy$))
         .subscribe((scoreUpdate) => {
@@ -90,17 +87,20 @@ export class HomeComponent implements OnInit {
     }
   }
 
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
   getFormattedSingleDate(date: string | Date): string {
     const parsedDate = new Date(date);
 
-    // Ustawienia dla dnia tygodnia, dnia, roku i odmiany miesiąca w dopełniaczu
     const day = parsedDate.getDate();
     const year = parsedDate.getFullYear();
 
     const weekday = parsedDate.toLocaleDateString('pl-PL', { weekday: 'long' });
     const formattedWeekday = weekday.charAt(0).toUpperCase() + weekday.slice(1);
 
-    // Mapa odmian miesięcy w dopełniaczu
     const monthInGenitive: { [key: string]: string } = {
       styczeń: 'Stycznia',
       luty: 'Lutego',
@@ -116,34 +116,30 @@ export class HomeComponent implements OnInit {
       grudzień: 'Grudnia',
     };
 
-    // Pobierz miesiąc w mianowniku i przemapuj na dopełniacz
     const month = parsedDate
       .toLocaleDateString('pl-PL', { month: 'long' })
       .toLowerCase();
-    const formattedMonth = monthInGenitive[month] || month; // Bezpieczne użycie mapy
 
-    // Ustawienie godziny i minuty
+    const formattedMonth = monthInGenitive[month] || month;
+
     const time = parsedDate.toLocaleTimeString('pl-PL', {
       hour: '2-digit',
       minute: '2-digit',
     });
 
-    // Pożądany format daty
     return `${formattedWeekday}, ${day} ${formattedMonth} ${year} - ${time}`;
   }
 
   getFormattedDate(
     matchDate: string | Date,
-    matchEndDate: string | Date
+    matchEndDate: string | Date,
   ): string[] {
     const startDate = new Date(matchDate);
     const endDate = new Date(matchEndDate);
 
-    // Pobranie dnia, roku i formatu miesiąca w dopełniaczu
     const day = startDate.getDate();
     const year = startDate.getFullYear();
 
-    // Mapa odmian miesięcy w dopełniaczu
     const monthInGenitive: { [key: string]: string } = {
       styczeń: 'Stycznia',
       luty: 'Lutego',
@@ -159,28 +155,26 @@ export class HomeComponent implements OnInit {
       grudzień: 'Grudnia',
     };
 
-    // Pobierz miesiąc w mianowniku i przemapuj na dopełniacz
     const month = startDate
       .toLocaleDateString('pl-PL', { month: 'long' })
       .toLowerCase();
-    const formattedMonth = monthInGenitive[month] || month; // Bezpieczne użycie mapy
 
-    // Formatowanie godzin rozpoczęcia i zakończenia meczu
+    const formattedMonth = monthInGenitive[month] || month;
+
     const startTime = startDate.toLocaleTimeString('pl-PL', {
       hour: '2-digit',
       minute: '2-digit',
     });
+
     const endTime = endDate.toLocaleTimeString('pl-PL', {
       hour: '2-digit',
       minute: '2-digit',
     });
 
-    // Obliczenie czasu trwania meczu
     const durationMinutes = Math.round(
-      (endDate.getTime() - startDate.getTime()) / 60000
-    ); // Konwersja ms -> min
+      (endDate.getTime() - startDate.getTime()) / 60000,
+    );
 
-    // Formatowanie końcowego wyniku
     return [
       `${day} ${formattedMonth} ${year}`,
       `${startTime} - ${endTime} (${durationMinutes} min)`,
@@ -189,7 +183,6 @@ export class HomeComponent implements OnInit {
 
   getGoalMinute(goalTimespan: string): number {
     const time = goalTimespan.split(':');
-    const minutes = parseInt(time[0], 10) * 60 + parseInt(time[1], 10); // Godziny * 60 + minuty
-    return minutes;
+    return parseInt(time[0], 10) * 60 + parseInt(time[1], 10);
   }
 }
