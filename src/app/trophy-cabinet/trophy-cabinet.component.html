@@ -28,8 +28,8 @@
           >
             <div class="award-image-wrapper">
               <img
-                [src]="getAwardImagePath(season.seasonName, award.name)"
-                [alt]="award.name"
+                [src]="getAwardImagePath(season.seasonName, award.slug)"
+                [alt]="award.slug"
                 class="award-image"
                 loading="lazy"
               />

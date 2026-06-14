@@ -15,6 +15,7 @@ export interface SeasonStatsDto {
 export interface AwardDto {
   id: number;
   name: string;
+  slug: string;
   value: string;
   tooltip: string;
   seasonId: number;

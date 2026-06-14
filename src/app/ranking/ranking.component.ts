@@ -96,7 +96,7 @@ export class RankingComponent implements OnInit {
 
   getAwardImagePath(award: PlayerAwardDto): string {
     return encodeURI(
-      `puchary/${this.normalizePathSegment(award.seasonName)}/${this.normalizePathSegment(award.name)}.png`,
+      `puchary/${this.normalizePathSegment(award.seasonName)}/${this.normalizePathSegment(award.slug)}.png`,
     );
   }
 
