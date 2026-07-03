@@ -1,9 +1,17 @@
 import { Component, OnInit, inject, ChangeDetectionStrategy } from '@angular/core';
+import '../../syncfusion-license';
 
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { forkJoin } from 'rxjs';
+import {
+  ChartModule,
+  CrosshairService,
+  DateTimeService,
+  SplineSeriesService,
+  TooltipService,
+} from '@syncfusion/ej2-angular-charts';
 import { BaseUrl } from '../consts/urls';
 import { SeasonAwardsService } from '../services/season-awards.service';
 import { PlayerAwardDto } from '../models/season-awards.model';
@@ -22,12 +30,24 @@ export interface PlayerStatsResponseDto {
   eloProgressions: { date: string; rating: number }[];
 }
 
+interface EloChartPoint {
+  date: Date;
+  rating: number;
+  tooltip: string;
+}
+
 @Component({
     selector: 'app-player-stats',
-    imports: [HttpClientModule, RouterModule, MatTooltipModule],
+    imports: [HttpClientModule, RouterModule, MatTooltipModule, ChartModule],
     templateUrl: './player-stats.component.html',
     changeDetection: ChangeDetectionStrategy.Eager,
-    styleUrls: ['./player-stats.component.css']
+    styleUrls: ['./player-stats.component.css'],
+    providers: [
+      CrosshairService,
+      DateTimeService,
+      SplineSeriesService,
+      TooltipService,
+    ],
 })
 export class PlayerStatsComponent implements OnInit {
   private route = inject(ActivatedRoute);
@@ -37,6 +57,56 @@ export class PlayerStatsComponent implements OnInit {
   playerId!: string;
   stats!: PlayerStatsResponseDto | null;
   playerAwards: PlayerAwardDto[] = [];
+  eloChartData: EloChartPoint[] = [];
+  eloPrimaryXAxis = this.getDefaultEloXAxis();
+  eloPrimaryYAxis = this.getDefaultEloYAxis();
+  eloChartArea = {
+    border: { width: 0 },
+  };
+  eloChartMargin = {
+    top: 8,
+    right: 16,
+    bottom: 8,
+    left: 8,
+  };
+  eloTooltip = {
+    enable: true,
+    shared: false,
+    fill: '#151515',
+    textStyle: {
+      color: '#ffffff',
+      fontWeight: '600',
+      size: '13px',
+    },
+    border: {
+      color: '#151515',
+      width: 1,
+    },
+  };
+  eloCrosshair = {
+    enable: true,
+    lineType: 'Vertical',
+    line: {
+      width: 1,
+      color: '#9ca3af',
+      dashArray: '4 4',
+    },
+  };
+  eloMarker = {
+    visible: true,
+    width: 7,
+    height: 7,
+    fill: '#ffffff',
+    border: {
+      width: 2,
+      color: '#e53935',
+    },
+  };
+  eloAnimation = {
+    enable: true,
+    duration: 1400,
+    delay: 120,
+  };
 
   ngOnInit(): void {
     this.playerId = this.route.snapshot.paramMap.get('id')!;
@@ -49,6 +119,7 @@ export class PlayerStatsComponent implements OnInit {
     }).subscribe({
       next: ({ stats, awards }) => {
         this.stats = stats;
+        this.setEloChartData(stats.eloProgressions ?? []);
         this.playerAwards = (awards ?? []).filter((award) =>
           (award.players ?? []).some((player) => player.id === this.playerId),
         );
@@ -85,6 +156,110 @@ export class PlayerStatsComponent implements OnInit {
     const minutes = total % 60;
     if (hours === 0) return `${minutes} min`;
     return `${hours}h ${minutes}min`;
+  }
+
+  get latestElo(): EloChartPoint | null {
+    return this.eloChartData.at(-1) ?? null;
+  }
+
+  get bestElo(): EloChartPoint | null {
+    if (this.eloChartData.length === 0) return null;
+
+    return this.eloChartData.reduce((best, current) =>
+      current.rating > best.rating ? current : best,
+    );
+  }
+
+  formatChartDate(date: Date): string {
+    return new Intl.DateTimeFormat('pl-PL', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
+    }).format(date);
+  }
+
+  private setEloChartData(progressions: { date: string; rating: number }[]): void {
+    this.eloChartData = progressions
+      .map((point) => ({
+        date: new Date(point.date),
+        rating: point.rating,
+      }))
+      .filter((point) => !Number.isNaN(point.date.getTime()))
+      .sort((a, b) => a.date.getTime() - b.date.getTime())
+      .map((point) => ({
+        ...point,
+        tooltip: `${this.formatChartDate(point.date)} | ELO ${point.rating}`,
+      }));
+
+    this.eloPrimaryXAxis = {
+      ...this.getDefaultEloXAxis(),
+      ...(this.eloChartData.length > 8
+        ? { intervalType: 'Months', labelFormat: 'MMM yy' }
+        : {}),
+    };
+    this.eloPrimaryYAxis = {
+      ...this.getDefaultEloYAxis(),
+      ...this.getEloYAxisRange(),
+    };
+  }
+
+  private getEloYAxisRange(): {
+    minimum?: number;
+    maximum?: number;
+    interval?: number;
+  } {
+    if (this.eloChartData.length === 0) return {};
+
+    const ratings = this.eloChartData.map((point) => point.rating);
+    const min = Math.min(...ratings);
+    const max = Math.max(...ratings);
+    const range = Math.max(1, max - min);
+    const padding = Math.max(60, Math.ceil(range * 0.45));
+    const minimum = Math.floor((min - padding) / 10) * 10;
+    const maximum = Math.ceil((max + padding) / 10) * 10;
+    const interval = Math.max(30, Math.ceil((maximum - minimum) / 5 / 10) * 10);
+
+    return { minimum, maximum, interval };
+  }
+
+  private getDefaultEloXAxis() {
+    return {
+      valueType: 'DateTime',
+      labelFormat: 'dd.MM.yy',
+      edgeLabelPlacement: 'Shift',
+      majorGridLines: { width: 0 },
+      majorTickLines: { width: 0 },
+      lineStyle: { color: '#d4d4d4', width: 1 },
+      labelStyle: {
+        color: '#5f6368',
+        size: '12px',
+      },
+    };
+  }
+
+  private getDefaultEloYAxis() {
+    return {
+      labelFormat: '{value}',
+      opposedPosition: false,
+      rangePadding: 'Additional',
+      majorGridLines: {
+        width: 1,
+        color: '#ececec',
+        dashArray: '4 3',
+      },
+      majorTickLines: { width: 0 },
+      lineStyle: { width: 0 },
+      labelStyle: {
+        color: '#5f6368',
+        size: '12px',
+      },
+      title: 'Ranking ELO',
+      titleStyle: {
+        color: '#4b5563',
+        size: '12px',
+        fontWeight: '600',
+      },
+    };
   }
 
   private normalizePathSegment(value: string): string {

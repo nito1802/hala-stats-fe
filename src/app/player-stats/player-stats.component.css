@@ -1,5 +1,5 @@
 .stats-container {
-  max-width: 800px;
+  max-width: 1040px;
   margin: 30px auto;
   padding: 20px;
 }
@@ -58,7 +58,7 @@
   justify-content: center;
   flex-wrap: wrap;
   gap: 6px;
-  margin-bottom: 30px;
+  margin-bottom: 26px;
 }
 
 .serie-box {
@@ -83,6 +83,82 @@
 
 .draw {
   background-color: #fbc02d;
+}
+
+.elo-chart-section {
+  border: 1px solid #dadce0;
+  border-radius: 8px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(248, 249, 250, 0.98)),
+    #fff;
+  box-shadow: 0 12px 32px rgba(60, 64, 67, 0.08);
+  margin: 0 auto 28px;
+  padding: 20px 22px 18px;
+  overflow: hidden;
+}
+
+.elo-chart-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 18px;
+  margin-bottom: 12px;
+}
+
+.elo-title {
+  margin: 0;
+  text-align: left;
+}
+
+.elo-subtitle {
+  margin-top: 4px;
+  color: #5f6368;
+  font-size: 0.92rem;
+}
+
+.elo-summary {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(104px, 1fr));
+  gap: 8px;
+  min-width: 296px;
+}
+
+.elo-summary-item {
+  border: 1px solid #e2e5e9;
+  border-radius: 8px;
+  background: #fff;
+  padding: 10px 12px;
+  text-align: left;
+}
+
+.elo-summary-item span,
+.elo-summary-item small {
+  display: block;
+  color: #667085;
+  font-size: 0.78rem;
+  line-height: 1.15;
+}
+
+.elo-summary-item strong {
+  display: block;
+  color: #1f2937;
+  font-size: 1.35rem;
+  line-height: 1.1;
+  margin: 4px 0;
+}
+
+.elo-summary-item:last-child strong {
+  color: #2e7d32;
+}
+
+.elo-chart-wrapper {
+  width: 100%;
+  height: clamp(280px, 34vw, 420px);
+  min-height: 280px;
+}
+
+.elo-chart {
+  display: block;
 }
 
 .stats-grid {
@@ -112,6 +188,10 @@
 }
 
 @media (max-width: 700px) {
+  .stats-container {
+    padding: 16px;
+  }
+
   .stats-grid {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -128,10 +208,50 @@
     width: 26px;
     height: 26px;
   }
+
+  .elo-chart-section {
+    padding: 16px 12px 12px;
+  }
+
+  .elo-chart-header {
+    display: block;
+  }
+
+  .elo-title,
+  .elo-subtitle {
+    text-align: center;
+  }
+
+  .elo-summary {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    min-width: 0;
+    margin-top: 14px;
+  }
+
+  .elo-summary-item {
+    padding: 9px 8px;
+    text-align: center;
+  }
+
+  .elo-summary-item strong {
+    font-size: 1.15rem;
+  }
+
+  .elo-chart-wrapper {
+    height: 300px;
+  }
 }
 
 @media (max-width: 450px) {
   .stats-grid {
     grid-template-columns: 1fr;
+  }
+
+  .elo-summary {
+    grid-template-columns: 1fr;
+  }
+
+  .elo-chart-wrapper {
+    height: 280px;
   }
 }

@@ -27,7 +27,7 @@
       }
       <div class="section-title">Ostatnie mecze</div>
       <div class="serie-row">
-        @for (letter of stats.serie.split(''); track letter) {
+        @for (letter of stats.serie.split(''); track $index) {
           <div
             [class]="getSerieClass(letter)"
             >
@@ -35,6 +35,67 @@
           </div>
         }
       </div>
+      @if (eloChartData.length > 0) {
+        <section class="elo-chart-section" aria-label="Postęp rankingu ELO">
+          <div class="elo-chart-header">
+            <div>
+              <div class="section-title elo-title">Historia ELO</div>
+              <div class="elo-subtitle">
+                Postęp rankingu w czasie
+              </div>
+            </div>
+            <div class="elo-summary">
+              @if (latestElo) {
+                <div class="elo-summary-item">
+                  <span>Aktualnie</span>
+                  <strong>{{ latestElo.rating }}</strong>
+                  <small>{{ formatChartDate(latestElo.date) }}</small>
+                </div>
+              }
+              @if (bestElo) {
+                <div class="elo-summary-item">
+                  <span>Najwyżej</span>
+                  <strong>{{ bestElo.rating }}</strong>
+                  <small>{{ formatChartDate(bestElo.date) }}</small>
+                </div>
+              }
+            </div>
+          </div>
+          <div class="elo-chart-wrapper">
+            <ejs-chart
+              class="elo-chart"
+              height="100%"
+              width="100%"
+              [primaryXAxis]="eloPrimaryXAxis"
+              [primaryYAxis]="eloPrimaryYAxis"
+              [chartArea]="eloChartArea"
+              [margin]="eloChartMargin"
+              [tooltip]="eloTooltip"
+              [crosshair]="eloCrosshair"
+              [legendSettings]="{ visible: false }"
+              [enableAnimation]="true"
+              background="transparent"
+              >
+              <e-series-collection>
+                <e-series
+                  [dataSource]="eloChartData"
+                  type="Spline"
+                  splineType="Monotonic"
+                  xName="date"
+                  yName="rating"
+                  name="Ranking ELO"
+                  width="3"
+                  fill="#e53935"
+                  [marker]="eloMarker"
+                  [animation]="eloAnimation"
+                  tooltipMappingName="tooltip"
+                  >
+                </e-series>
+              </e-series-collection>
+            </ejs-chart>
+          </div>
+        </section>
+      }
       <div class="stats-grid">
         <div class="stat-box">
           <div class="stat-title">Rozegrane mecze</div>

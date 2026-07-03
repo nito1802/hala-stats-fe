@@ -25,6 +25,7 @@
     "@angular/ssr": "^22.0.1",
     "@microsoft/signalr": "^8.0.7",
     "@nito1802/my-shared": "^0.3.2",
+    "@syncfusion/ej2-angular-charts": "^33.2.15",
     "express": "^4.18.2",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",

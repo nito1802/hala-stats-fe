@@ -1,0 +1,176 @@
+
+> hala-stats-fe@0.0.0 start
+> ng serve --host 127.0.0.1 --port 4200
+
+> Building...
+√ Building...
+Initial chunk files | Names                  |  Raw size
+main.js             | main                   | 166.75 kB | 
+styles.css          | styles                 |   7.75 kB | 
+chunk-WZWVYHSK.js   | -                      |   3.16 kB | 
+polyfills.js        | polyfills              |  95 bytes | 
+
+                    | Initial total          | 177.75 kB
+
+Lazy chunk files    | Names                  |  Raw size
+chunk-SXIVJKYP.js   | player-stats-component |  33.62 kB | 
+
+Application bundle generation complete. [4.939 seconds] - 2026-07-03T10:58:32.171Z
+
+Watch mode enabled. Watching for file changes...
+NOTE: Raw file sizes do not reflect development server per-request transformations.
+[2m12:58:32[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m Re-optimizing dependencies because lockfile has changed
+  [32m➜[39m  [1mLocal[22m:   [36mhttp://127.0.0.1:[1m4200[22m/[39m
+> Changes detected. Rebuilding...
+√ Changes detected. Rebuilding...
+Initial chunk files | Names                  |  Raw size
+main.js             | main                   | 166.75 kB | 
+
+Lazy chunk files    | Names                  |  Raw size
+chunk-LJAGIO77.js   | player-stats-component |  34.00 kB | 
+
+Application bundle generation complete. [1.353 seconds] - 2026-07-03T11:02:03.463Z
+
+Page reload sent to client(s).
+> Changes detected. Rebuilding...
+√ Changes detected. Rebuilding...
+Initial chunk files | Names |  Raw size
+main.js             | main  | 167.02 kB | 
+
+Application bundle generation complete. [0.673 seconds] - 2026-07-03T11:23:34.213Z
+
+Page reload sent to client(s).
+> Changes detected. Rebuilding...
+√ Changes detected. Rebuilding...
+Initial chunk files | Names                  |  Raw size
+main.js             | main                   | 167.02 kB | 
+styles.css          | styles                 |   7.75 kB | 
+chunk-WZWVYHSK.js   | -                      |   3.16 kB | 
+polyfills.js        | polyfills              |  95 bytes | 
+
+                    | Initial total          | 178.02 kB
+
+Lazy chunk files    | Names                  |  Raw size
+chunk-LJAGIO77.js   | player-stats-component |  34.00 kB | 
+
+Application bundle generation complete. [0.719 seconds] - 2026-07-03T11:23:34.951Z
+
+> Changes detected. Rebuilding...
+√ Changes detected. Rebuilding...
+Application bundle generation failed. [0.694 seconds] - 2026-07-03T11:23:46.706Z
+
+> Changes detected. Rebuilding...
+√ Changes detected. Rebuilding...
+Application bundle generation failed. [0.265 seconds] - 2026-07-03T11:24:12.812Z
+
+> Changes detected. Rebuilding...
+√ Changes detected. Rebuilding...
+Initial chunk files | Names                  |  Raw size
+main.js             | main                   | 167.02 kB | 
+styles.css          | styles                 |   7.75 kB | 
+chunk-WZWVYHSK.js   | -                      |   3.16 kB | 
+polyfills.js        | polyfills              |  95 bytes | 
+
+                    | Initial total          | 178.02 kB
+
+Lazy chunk files    | Names                  |  Raw size
+chunk-N2ONUVUH.js   | player-stats-component |  33.16 kB | 
+
+Application bundle generation complete. [0.661 seconds] - 2026-07-03T11:24:13.644Z
+
+Page reload sent to client(s).
+> Changes detected. Rebuilding...
+√ Changes detected. Rebuilding...
+Initial chunk files | Names                  |  Raw size
+main.js             | main                   | 167.02 kB | 
+
+Lazy chunk files    | Names                  |  Raw size
+chunk-NT73436M.js   | player-stats-component |  32.95 kB | 
+
+Application bundle generation complete. [0.784 seconds] - 2026-07-03T11:24:21.211Z
+
+Component update sent to client(s).
+> Changes detected. Rebuilding...
+√ Changes detected. Rebuilding...
+Initial chunk files | Names |  Raw size
+main.js             | main  | 166.75 kB | 
+
+Application bundle generation complete. [0.471 seconds] - 2026-07-03T11:24:51.102Z
+
+Page reload sent to client(s).
+> Changes detected. Rebuilding...
+√ Changes detected. Rebuilding...
+Initial chunk files | Names                  |  Raw size
+main.js             | main                   | 166.75 kB | 
+styles.css          | styles                 |   7.75 kB | 
+chunk-WZWVYHSK.js   | -                      |   3.16 kB | 
+polyfills.js        | polyfills              |  95 bytes | 
+
+                    | Initial total          | 177.75 kB
+
+Lazy chunk files    | Names                  |  Raw size
+chunk-NT73436M.js   | player-stats-component |  32.95 kB | 
+
+Application bundle generation complete. [0.545 seconds] - 2026-07-03T11:24:51.656Z
+
+> Changes detected. Rebuilding...
+√ Changes detected. Rebuilding...
+Initial chunk files | Names                  |  Raw size
+main.js             | main                   | 166.75 kB | 
+
+Lazy chunk files    | Names                  |  Raw size
+chunk-2DQTAPHH.js   | player-stats-component |  33.27 kB | 
+
+Application bundle generation complete. [1.090 seconds] - 2026-07-03T11:24:52.760Z
+
+Page reload sent to client(s).
+[2m13:32:17[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32m✨ new dependencies optimized: [33m@syncfusion/ej2-base[32m[39m
+[2m13:32:17[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32m✨ optimized dependencies changed. reloading[39m
+> Changes detected. Rebuilding...
+√ Changes detected. Rebuilding...
+Initial chunk files | Names                  |  Raw size
+main.js             | main                   | 166.75 kB | 
+styles.css          | styles                 |   7.75 kB | 
+chunk-WZWVYHSK.js   | -                      |   3.16 kB | 
+polyfills.js        | polyfills              |  95 bytes | 
+
+                    | Initial total          | 177.75 kB
+
+Lazy chunk files    | Names                  |  Raw size
+chunk-2DQTAPHH.js   | player-stats-component |  33.27 kB | 
+
+Application bundle generation complete. [0.016 seconds] - 2026-07-03T11:45:11.828Z
+
+Page reload sent to client(s).
+> Changes detected. Rebuilding...
+√ Changes detected. Rebuilding...
+Initial chunk files | Names                  |  Raw size
+main.js             | main                   | 166.75 kB | 
+styles.css          | styles                 |   7.75 kB | 
+chunk-WZWVYHSK.js   | -                      |   3.16 kB | 
+polyfills.js        | polyfills              |  95 bytes | 
+
+                    | Initial total          | 177.75 kB
+
+Lazy chunk files    | Names                  |  Raw size
+chunk-2DQTAPHH.js   | player-stats-component |  33.27 kB | 
+
+Application bundle generation complete. [0.006 seconds] - 2026-07-03T11:49:37.433Z
+
+Page reload sent to client(s).
+> Changes detected. Rebuilding...
+√ Changes detected. Rebuilding...
+Initial chunk files | Names                  |  Raw size
+main.js             | main                   | 166.75 kB | 
+styles.css          | styles                 |   7.75 kB | 
+chunk-WZWVYHSK.js   | -                      |   3.16 kB | 
+polyfills.js        | polyfills              |  95 bytes | 
+
+                    | Initial total          | 177.75 kB
+
+Lazy chunk files    | Names                  |  Raw size
+chunk-2DQTAPHH.js   | player-stats-component |  33.27 kB | 
+
+Application bundle generation complete. [0.017 seconds] - 2026-07-03T12:01:49.643Z
+
+Page reload sent to client(s).
