@@ -77,6 +77,8 @@
               [enableAnimation]="true"
               (pointClick)="showEloTooltipOnPointClick($event)"
               (tooltipRender)="formatEloTooltip($event)"
+              (chartMouseClick)="hideEloTooltipOnChartClick($event)"
+              (chartMouseLeave)="hideEloTooltip()"
               background="transparent"
               >
               <e-series-collection>

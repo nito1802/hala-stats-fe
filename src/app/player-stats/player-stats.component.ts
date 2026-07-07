@@ -58,6 +58,7 @@ interface EloChartPoint {
 export class PlayerStatsComponent implements OnInit {
   @ViewChild('eloChart') private eloChart?: ChartComponent;
 
+  private eloTooltipHideTimer: ReturnType<typeof setTimeout> | null = null;
   private route = inject(ActivatedRoute);
   private http = inject(HttpClient);
   private seasonAwardsService = inject(SeasonAwardsService);
@@ -188,6 +189,18 @@ export class PlayerStatsComponent implements OnInit {
     if (!point) return;
 
     this.eloChart?.showTooltip(point.matchNumber, point.rating, true);
+    this.scheduleEloTooltipHide();
+  }
+
+  hideEloTooltip(): void {
+    this.clearEloTooltipHideTimer();
+    this.eloChart?.hideTooltip();
+  }
+
+  hideEloTooltipOnChartClick(args: { target?: string }): void {
+    if (args.target?.includes('_Point_')) return;
+
+    this.hideEloTooltip();
   }
 
   formatEloTooltip(args: {
@@ -318,6 +331,21 @@ export class PlayerStatsComponent implements OnInit {
         fontWeight: '600',
       },
     };
+  }
+
+  private scheduleEloTooltipHide(): void {
+    this.clearEloTooltipHideTimer();
+    this.eloTooltipHideTimer = setTimeout(() => {
+      this.eloChart?.hideTooltip();
+      this.eloTooltipHideTimer = null;
+    }, 3500);
+  }
+
+  private clearEloTooltipHideTimer(): void {
+    if (!this.eloTooltipHideTimer) return;
+
+    clearTimeout(this.eloTooltipHideTimer);
+    this.eloTooltipHideTimer = null;
   }
 
   private normalizePathSegment(value: string): string {
