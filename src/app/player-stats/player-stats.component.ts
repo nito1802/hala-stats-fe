@@ -44,16 +44,12 @@ interface EloChartPoint {
 }
 
 @Component({
-    selector: 'app-player-stats',
-    imports: [HttpClientModule, RouterModule, MatTooltipModule, ChartModule],
-    templateUrl: './player-stats.component.html',
-    changeDetection: ChangeDetectionStrategy.Eager,
-    styleUrls: ['./player-stats.component.css'],
-    providers: [
-      CrosshairService,
-      SplineSeriesService,
-      TooltipService,
-    ],
+  selector: 'app-player-stats',
+  imports: [HttpClientModule, RouterModule, MatTooltipModule, ChartModule],
+  templateUrl: './player-stats.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
+  styleUrls: ['./player-stats.component.css'],
+  providers: [CrosshairService, SplineSeriesService, TooltipService],
 })
 export class PlayerStatsComponent implements OnInit {
   @ViewChild('eloChart') private eloChart?: ChartComponent;
@@ -83,7 +79,7 @@ export class PlayerStatsComponent implements OnInit {
     enableMarker: true,
     shared: false,
     duration: 180,
-    fadeOutDuration: 3500,
+    fadeOutDuration: 2000,
     fill: '#151515',
     textStyle: {
       color: '#ffffff',
@@ -226,7 +222,9 @@ export class PlayerStatsComponent implements OnInit {
     }).format(date);
   }
 
-  private setEloChartData(progressions: { date: string; rating: number }[]): void {
+  private setEloChartData(
+    progressions: { date: string; rating: number }[],
+  ): void {
     this.eloChartData = progressions
       .map((point) => ({
         date: new Date(point.date),
@@ -338,7 +336,7 @@ export class PlayerStatsComponent implements OnInit {
     this.eloTooltipHideTimer = setTimeout(() => {
       this.eloChart?.hideTooltip();
       this.eloTooltipHideTimer = null;
-    }, 3500);
+    }, 2000);
   }
 
   private clearEloTooltipHideTimer(): void {
