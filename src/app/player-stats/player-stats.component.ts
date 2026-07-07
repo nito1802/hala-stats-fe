@@ -1,4 +1,10 @@
-import { Component, OnInit, inject, ChangeDetectionStrategy } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  inject,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import '../../syncfusion-license';
 
 import { ActivatedRoute, RouterModule } from '@angular/router';
@@ -6,9 +12,9 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { forkJoin } from 'rxjs';
 import {
+  ChartComponent,
   ChartModule,
   CrosshairService,
-  DateTimeService,
   SplineSeriesService,
   TooltipService,
 } from '@syncfusion/ej2-angular-charts';
@@ -31,6 +37,7 @@ export interface PlayerStatsResponseDto {
 }
 
 interface EloChartPoint {
+  matchNumber: number;
   date: Date;
   rating: number;
   tooltip: string;
@@ -44,12 +51,13 @@ interface EloChartPoint {
     styleUrls: ['./player-stats.component.css'],
     providers: [
       CrosshairService,
-      DateTimeService,
       SplineSeriesService,
       TooltipService,
     ],
 })
 export class PlayerStatsComponent implements OnInit {
+  @ViewChild('eloChart') private eloChart?: ChartComponent;
+
   private route = inject(ActivatedRoute);
   private http = inject(HttpClient);
   private seasonAwardsService = inject(SeasonAwardsService);
@@ -71,7 +79,10 @@ export class PlayerStatsComponent implements OnInit {
   };
   eloTooltip = {
     enable: true,
+    enableMarker: true,
     shared: false,
+    duration: 180,
+    fadeOutDuration: 3500,
     fill: '#151515',
     textStyle: {
       color: '#ffffff',
@@ -94,8 +105,8 @@ export class PlayerStatsComponent implements OnInit {
   };
   eloMarker = {
     visible: true,
-    width: 7,
-    height: 7,
+    width: 9,
+    height: 9,
     fill: '#ffffff',
     border: {
       width: 2,
@@ -170,6 +181,30 @@ export class PlayerStatsComponent implements OnInit {
     );
   }
 
+  showEloTooltipOnPointClick(args: { pointIndex?: number }): void {
+    const pointIndex = args.pointIndex ?? -1;
+    const point = this.eloChartData[pointIndex];
+
+    if (!point) return;
+
+    this.eloChart?.showTooltip(point.matchNumber, point.rating, true);
+  }
+
+  formatEloTooltip(args: {
+    data?: { pointIndex?: number };
+    point?: { index?: number };
+    text?: string;
+    headerText?: string;
+  }): void {
+    const pointIndex = args.data?.pointIndex ?? args.point?.index ?? -1;
+    const point = this.eloChartData[pointIndex];
+
+    if (!point) return;
+
+    args.headerText = 'Ranking ELO';
+    args.text = `Mecz ${point.matchNumber}: ${point.rating}<br>${this.formatChartDate(point.date)}`;
+  }
+
   formatChartDate(date: Date): string {
     return new Intl.DateTimeFormat('pl-PL', {
       day: '2-digit',
@@ -186,16 +221,15 @@ export class PlayerStatsComponent implements OnInit {
       }))
       .filter((point) => !Number.isNaN(point.date.getTime()))
       .sort((a, b) => a.date.getTime() - b.date.getTime())
-      .map((point) => ({
+      .map((point, index) => ({
         ...point,
-        tooltip: `${this.formatChartDate(point.date)} | ELO ${point.rating}`,
+        matchNumber: index + 1,
+        tooltip: `Mecz ${index + 1}: ${point.rating}<br>${this.formatChartDate(point.date)}`,
       }));
 
     this.eloPrimaryXAxis = {
       ...this.getDefaultEloXAxis(),
-      ...(this.eloChartData.length > 8
-        ? { intervalType: 'Months', labelFormat: 'MMM yy' }
-        : {}),
+      ...this.getEloXAxisRange(),
     };
     this.eloPrimaryYAxis = {
       ...this.getDefaultEloYAxis(),
@@ -222,17 +256,41 @@ export class PlayerStatsComponent implements OnInit {
     return { minimum, maximum, interval };
   }
 
+  private getEloXAxisRange(): {
+    minimum?: number;
+    maximum?: number;
+    interval?: number;
+  } {
+    const length = this.eloChartData.length;
+
+    if (length === 0) return {};
+    if (length === 1) return { minimum: 0.5, maximum: 1.5, interval: 1 };
+
+    return {
+      minimum: 1,
+      maximum: length,
+      interval: Math.max(1, Math.ceil((length - 1) / 6)),
+    };
+  }
+
   private getDefaultEloXAxis() {
     return {
-      valueType: 'DateTime',
-      labelFormat: 'dd.MM.yy',
+      valueType: 'Double',
+      labelFormat: '',
       edgeLabelPlacement: 'Shift',
+      labelIntersectAction: 'Hide',
       majorGridLines: { width: 0 },
       majorTickLines: { width: 0 },
       lineStyle: { color: '#d4d4d4', width: 1 },
       labelStyle: {
         color: '#5f6368',
         size: '12px',
+      },
+      title: 'Rozegrane mecze',
+      titleStyle: {
+        color: '#4b5563',
+        size: '12px',
+        fontWeight: '600',
       },
     };
   }
