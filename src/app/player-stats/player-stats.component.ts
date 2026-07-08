@@ -79,7 +79,7 @@ export class PlayerStatsComponent implements OnInit {
     enableMarker: true,
     shared: false,
     duration: 180,
-    fadeOutDuration: 2000,
+    fadeOutDuration: 500,
     fill: '#151515',
     textStyle: {
       color: '#ffffff',
@@ -336,7 +336,7 @@ export class PlayerStatsComponent implements OnInit {
     this.eloTooltipHideTimer = setTimeout(() => {
       this.eloChart?.hideTooltip();
       this.eloTooltipHideTimer = null;
-    }, 2000);
+    }, 500);
   }
 
   private clearEloTooltipHideTimer(): void {
