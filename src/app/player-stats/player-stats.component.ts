@@ -10,7 +10,7 @@ import '../../syncfusion-license';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { forkJoin } from 'rxjs';
+import { catchError, forkJoin, of } from 'rxjs';
 import {
   ChartComponent,
   ChartModule,
@@ -34,6 +34,29 @@ export interface PlayerStatsResponseDto {
   teamGoalsScored: number;
   teamGoalsConceded: number;
   eloProgressions: { date: string; rating: number }[];
+}
+
+interface MatchPlayerDto {
+  id: string;
+  displayName: string;
+}
+
+interface MatchTeamDto {
+  players: MatchPlayerDto[];
+  goalsCount: number;
+  teamName: string;
+}
+
+interface MatchHistoryDto {
+  teamA: MatchTeamDto;
+  teamB: MatchTeamDto;
+  matchDate: string;
+}
+
+interface PlayerRecentMatch {
+  result: string;
+  score?: string;
+  tooltip?: string;
 }
 
 interface EloChartPoint {
@@ -62,6 +85,7 @@ export class PlayerStatsComponent implements OnInit {
   playerId!: string;
   stats!: PlayerStatsResponseDto | null;
   playerAwards: PlayerAwardDto[] = [];
+  recentMatches: PlayerRecentMatch[] = [];
   eloChartData: EloChartPoint[] = [];
   eloPrimaryXAxis = this.getDefaultEloXAxis();
   eloPrimaryYAxis = this.getDefaultEloYAxis();
@@ -124,10 +148,14 @@ export class PlayerStatsComponent implements OnInit {
         `${BaseUrl}/Player/player-stats?playerId=${this.playerId}`,
       ),
       awards: this.seasonAwardsService.getAllAwardsFlat(),
+      matches: this.http
+        .get<MatchHistoryDto[]>(`${BaseUrl}/Match/matches-history`)
+        .pipe(catchError(() => of([] as MatchHistoryDto[]))),
     }).subscribe({
-      next: ({ stats, awards }) => {
+      next: ({ stats, awards, matches }) => {
         this.stats = stats;
         this.setEloChartData(stats.eloProgressions ?? []);
+        this.setRecentMatches(stats, matches ?? []);
         this.playerAwards = (awards ?? []).filter((award) =>
           (award.players ?? []).some((player) => player.id === this.playerId),
         );
@@ -220,6 +248,10 @@ export class PlayerStatsComponent implements OnInit {
       month: '2-digit',
       year: 'numeric',
     }).format(date);
+  }
+
+  trackByRecentMatch(index: number, match: PlayerRecentMatch): string {
+    return `${index}-${match.result}-${match.score ?? ''}`;
   }
 
   private setEloChartData(
@@ -348,5 +380,102 @@ export class PlayerStatsComponent implements OnInit {
 
   private normalizePathSegment(value: string): string {
     return value.replaceAll('/', '-').trim();
+  }
+
+  private setRecentMatches(
+    stats: PlayerStatsResponseDto,
+    matchesHistory: MatchHistoryDto[],
+  ): void {
+    const serieLetters = (stats.serie ?? '').split('');
+    const playerMatches = matchesHistory
+      .filter((match) => this.getPlayerTeam(match, stats) !== null)
+      .sort(
+        (a, b) =>
+          new Date(b.matchDate).getTime() - new Date(a.matchDate).getTime(),
+      )
+      .slice(0, serieLetters.length);
+
+    this.recentMatches = serieLetters.map((letter, index) => {
+      const match = playerMatches[index];
+
+      if (!match) return { result: letter };
+
+      return this.getRecentMatchFromHistory(match, stats) ?? { result: letter };
+    });
+  }
+
+  private getRecentMatchFromHistory(
+    match: MatchHistoryDto,
+    stats: PlayerStatsResponseDto,
+  ): PlayerRecentMatch | null {
+    const playerTeam = this.getPlayerTeam(match, stats);
+
+    if (!playerTeam) return null;
+
+    const ownTeam = playerTeam === 'A' ? match.teamA : match.teamB;
+    const opponentTeam = playerTeam === 'A' ? match.teamB : match.teamA;
+    const ownGoals = ownTeam.goalsCount;
+    const opponentGoals = opponentTeam.goalsCount;
+
+    return {
+      result: this.getMatchResultLetter(ownGoals, opponentGoals),
+      score: `${ownGoals}-${opponentGoals}`,
+      tooltip: `${ownTeam.teamName} vs ${opponentTeam.teamName} - ${this.formatChartDate(
+        new Date(match.matchDate),
+      )}`,
+    };
+  }
+
+  private getPlayerTeam(
+    match: MatchHistoryDto,
+    stats: PlayerStatsResponseDto,
+  ): 'A' | 'B' | null {
+    if (this.teamHasPlayer(match.teamA, stats)) return 'A';
+    if (this.teamHasPlayer(match.teamB, stats)) return 'B';
+
+    return null;
+  }
+
+  private teamHasPlayer(
+    team: MatchTeamDto,
+    stats: PlayerStatsResponseDto,
+  ): boolean {
+    return team.players.some((player) => this.isCurrentPlayer(player, stats));
+  }
+
+  private isCurrentPlayer(
+    player: MatchPlayerDto,
+    stats: PlayerStatsResponseDto,
+  ): boolean {
+    const currentPlayerKeys = [
+      this.playerId,
+      this.safeDecodeURIComponent(this.playerId),
+      stats.id,
+      stats.displayName,
+    ].map((value) => this.normalizePlayerKey(value));
+    const playerKeys = [player.id, player.displayName].map((value) =>
+      this.normalizePlayerKey(value),
+    );
+
+    return playerKeys.some((playerKey) => currentPlayerKeys.includes(playerKey));
+  }
+
+  private normalizePlayerKey(value: string): string {
+    return value.trim().toLocaleLowerCase('pl-PL');
+  }
+
+  private safeDecodeURIComponent(value: string): string {
+    try {
+      return decodeURIComponent(value);
+    } catch {
+      return value;
+    }
+  }
+
+  private getMatchResultLetter(ownGoals: number, opponentGoals: number): string {
+    if (ownGoals > opponentGoals) return 'Z';
+    if (ownGoals < opponentGoals) return 'P';
+
+    return 'R';
   }
 }
