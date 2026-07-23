@@ -59,6 +59,10 @@ interface PlayerRecentMatch {
   tooltip?: string;
 }
 
+interface PlayerMatchSummary extends PlayerRecentMatch {
+  date: Date;
+}
+
 interface EloChartPoint {
   matchNumber: number;
   date: Date;
@@ -153,9 +157,11 @@ export class PlayerStatsComponent implements OnInit {
         .pipe(catchError(() => of([] as MatchHistoryDto[]))),
     }).subscribe({
       next: ({ stats, awards, matches }) => {
+        const playerMatches = this.getPlayerMatches(stats, matches ?? []);
+
         this.stats = stats;
-        this.setEloChartData(stats.eloProgressions ?? []);
-        this.setRecentMatches(stats, matches ?? []);
+        this.setEloChartData(stats.eloProgressions ?? [], playerMatches);
+        this.setRecentMatches(stats, playerMatches);
         this.playerAwards = (awards ?? []).filter((award) =>
           (award.players ?? []).some((player) => player.id === this.playerId),
         );
@@ -239,7 +245,7 @@ export class PlayerStatsComponent implements OnInit {
     if (!point) return;
 
     args.headerText = 'Ranking ELO';
-    args.text = `Mecz ${point.matchNumber}: ${point.rating}<br>${this.formatChartDate(point.date)}`;
+    args.text = point.tooltip;
   }
 
   formatChartDate(date: Date): string {
@@ -256,7 +262,12 @@ export class PlayerStatsComponent implements OnInit {
 
   private setEloChartData(
     progressions: { date: string; rating: number }[],
+    playerMatches: PlayerMatchSummary[] = [],
   ): void {
+    const playerMatchesChronological = [...playerMatches].sort(
+      (a, b) => a.date.getTime() - b.date.getTime(),
+    );
+
     this.eloChartData = progressions
       .map((point) => ({
         date: new Date(point.date),
@@ -267,7 +278,12 @@ export class PlayerStatsComponent implements OnInit {
       .map((point, index) => ({
         ...point,
         matchNumber: index + 1,
-        tooltip: `Mecz ${index + 1}: ${point.rating}<br>${this.formatChartDate(point.date)}`,
+        tooltip: this.getEloTooltipText(
+          index,
+          point.rating,
+          point.date,
+          playerMatchesChronological[index - 1],
+        ),
       }));
 
     this.eloPrimaryXAxis = {
@@ -384,46 +400,70 @@ export class PlayerStatsComponent implements OnInit {
 
   private setRecentMatches(
     stats: PlayerStatsResponseDto,
-    matchesHistory: MatchHistoryDto[],
+    playerMatches: PlayerMatchSummary[],
   ): void {
     const serieLetters = (stats.serie ?? '').split('');
-    const playerMatches = matchesHistory
-      .filter((match) => this.getPlayerTeam(match, stats) !== null)
-      .sort(
-        (a, b) =>
-          new Date(b.matchDate).getTime() - new Date(a.matchDate).getTime(),
-      )
+    const recentPlayerMatches = [...playerMatches]
+      .sort((a, b) => b.date.getTime() - a.date.getTime())
       .slice(0, serieLetters.length);
 
     this.recentMatches = serieLetters.map((letter, index) => {
-      const match = playerMatches[index];
+      const match = recentPlayerMatches[index];
 
       if (!match) return { result: letter };
 
-      return this.getRecentMatchFromHistory(match, stats) ?? { result: letter };
+      return match;
     });
   }
 
-  private getRecentMatchFromHistory(
+  private getPlayerMatches(
+    stats: PlayerStatsResponseDto,
+    matchesHistory: MatchHistoryDto[],
+  ): PlayerMatchSummary[] {
+    return matchesHistory
+      .map((match) => this.getPlayerMatchFromHistory(match, stats))
+      .filter((match): match is PlayerMatchSummary => match !== null);
+  }
+
+  private getPlayerMatchFromHistory(
     match: MatchHistoryDto,
     stats: PlayerStatsResponseDto,
-  ): PlayerRecentMatch | null {
+  ): PlayerMatchSummary | null {
     const playerTeam = this.getPlayerTeam(match, stats);
+    const matchDate = new Date(match.matchDate);
 
-    if (!playerTeam) return null;
+    if (!playerTeam || Number.isNaN(matchDate.getTime())) return null;
 
     const ownTeam = playerTeam === 'A' ? match.teamA : match.teamB;
     const opponentTeam = playerTeam === 'A' ? match.teamB : match.teamA;
     const ownGoals = ownTeam.goalsCount;
     const opponentGoals = opponentTeam.goalsCount;
 
+    if (ownGoals === 0 && opponentGoals === 0) return null;
+
     return {
+      date: matchDate,
       result: this.getMatchResultLetter(ownGoals, opponentGoals),
       score: `${ownGoals}-${opponentGoals}`,
       tooltip: `${ownTeam.teamName} vs ${opponentTeam.teamName} - ${this.formatChartDate(
-        new Date(match.matchDate),
+        matchDate,
       )}`,
     };
+  }
+
+  private getEloTooltipText(
+    playedMatchNumber: number,
+    rating: number,
+    date: Date,
+    match?: PlayerMatchSummary,
+  ): string {
+    if (playedMatchNumber === 0) {
+      return `Start: ${rating}<br>${this.formatChartDate(date)}`;
+    }
+
+    const scoreLine = match?.score ? `<br>Wynik: ${match.score}` : '';
+
+    return `Mecz ${playedMatchNumber}: ${rating}${scoreLine}<br>${this.formatChartDate(date)}`;
   }
 
   private getPlayerTeam(
